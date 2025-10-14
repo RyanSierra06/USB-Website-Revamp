@@ -103,7 +103,7 @@ export default function BlogPost() {
                       p = p.replace(/board member photos/gi, 'Board Member Photos');
                       p = p.replace(/blog posts/gi, 'Blog/blog posts');
                       if (!p.startsWith('/')) p = '/' + p;
-                      return encodeURI(p);
+                      return `${getBasePath()}${encodeURI(p)}`;
                     };
                     const src = resolve(props.src);
                     return (

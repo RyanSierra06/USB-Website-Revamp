@@ -107,7 +107,7 @@ export default function StudentWikiPost() {
                         const base = p.split('/').pop();
                         p = `images/${base}`;
                       }
-                      return encodeURI(`/Student Wiki/${p}`);
+                      return `${getBasePath()}/Student Wiki/${encodeURI(p)}`;
                     };
                     const src = resolve(props.src);
                     return <img {...props} src={src} style={{ maxWidth: '100%', height: 'auto' }} loading="lazy" decoding="async" />;
