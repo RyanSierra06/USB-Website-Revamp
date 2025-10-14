@@ -4,7 +4,7 @@ import { BookOpen, Compass, ChevronLeft, ChevronRight, Send, ChevronDown, Chevro
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-// Get the base path for GitHub Pages
+// Get the base path for assets
 const getBasePath = () => {
   return '/USB-Website-Revamp';
 };
@@ -35,6 +35,7 @@ export default function Homepage() {
         if (!apiRes.ok) throw new Error(`HTTP ${apiRes.status}`);
         const posts = await apiRes.json();
         const firstSixImages = Array.isArray(posts) ? posts.filter(p => !!p?.imageUrl).slice(0, 6) : [];
+        console.log('Instagram posts loaded:', firstSixImages.length, firstSixImages);
         if (firstSixImages.length > 0) {
           setInstagramPosts(firstSixImages);
           try { localStorage.setItem(cacheKey, JSON.stringify({ value: firstSixImages, expiresAt: Date.now() + 10 * 60 * 1000 })); } catch {}
@@ -70,10 +71,29 @@ export default function Homepage() {
     const raw = post?.imageUrl || post?.media_url || post?.thumbnail_url;
     if (!raw) return null;
     let url = raw.trim();
+    
+    // Handle external URLs (Instagram API)
     if (url.startsWith('//')) url = 'https:' + url;
     if (url.startsWith('http:')) url = url.replace(/^http:/i, 'https:');
     if (/^https?:/i.test(url)) return url;
-    return encodeURI(url);
+    
+    // Handle local paths - if it already has the base path, use as is
+    if (url.startsWith('/USB-Website-Revamp/')) {
+      console.log('Instagram image URL:', url);
+      return url;
+    }
+    
+    // For relative paths, add the base path
+    if (url.startsWith('/')) {
+      const fullUrl = `${getBasePath()}${url}`;
+      console.log('Instagram image URL (relative):', fullUrl);
+      return fullUrl;
+    }
+    
+    // For other paths, add the base path
+    const fullUrl = `${getBasePath()}/${url}`;
+    console.log('Instagram image URL (other):', fullUrl);
+    return fullUrl;
   };
 
   const decodeEntities = (str) => {
@@ -298,7 +318,7 @@ export default function Homepage() {
 
       const leftIntersects = leftArrowRight > cardsLeft;
       const rightIntersects = rightArrowLeft < cardsRight;
-      
+
       if ((leftIntersects || rightIntersects) && visibleCount > 1) {
         const newCount = Math.max(1, visibleCount - 1);
         if (newCount !== visibleCount) {
@@ -335,8 +355,8 @@ export default function Homepage() {
   };
 
   return (
-        <div className="min-h-screen bg-white">
-          <Navbar />
+      <div className="min-h-screen bg-white">
+        <Navbar />
 
         <section className="py-16 px-8" style={{ backgroundColor: '#333333FF' }}>
           <div className="w-full">
@@ -579,7 +599,7 @@ export default function Homepage() {
                                       decoding="async"
                                       fetchpriority="high"
                                       onLoad={(e) => { e.currentTarget.style.opacity = '1'; }}
-                                      onError={(e) => { e.currentTarget.style.opacity = '1'; e.currentTarget.src = '/Logos & Icons/social media logos/instagram.svg'; }}
+                                      onError={(e) => { e.currentTarget.style.opacity = '1'; e.currentTarget.src = `${getBasePath()}/Logos & Icons/social media logos/instagram.svg`; }}
                                       style={{ transition: 'opacity 60ms linear' }}
                                   />
                               ) : (
@@ -761,10 +781,16 @@ export default function Homepage() {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {initiatives.map((item, idx) => (
+              {initiatives.map((item, idx) => {
+                const getLink = (link) => {
+                  if (!link) return undefined;
+                  if (link.startsWith('http')) return link;
+                  return `${getBasePath()}${link}`;
+                };
+                return (
                   <motion.a
                       key={`${item.title}-${idx}`}
-                      href={item.link || undefined}
+                      href={getLink(item.link)}
                       target={item.link ? '_blank' : undefined}
                       rel={item.link ? 'noopener noreferrer' : undefined}
                       className="group flex items-center gap-4 rounded-xl shadow-md p-4 hover:shadow-xl w-full"
@@ -789,7 +815,8 @@ export default function Homepage() {
                       </p>
                     </div>
                   </motion.a>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>

@@ -4,6 +4,11 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Navbar from '../components/Navbar';
 
+// Get the base path for assets
+const getBasePath = () => {
+  return '/USB-Website-Revamp';
+};
+
 export default function BlogPost() {
   const { slug } = useParams();
   const [content, setContent] = useState('');
@@ -15,22 +20,22 @@ export default function BlogPost() {
     let p = String(imgPath).replace(/^\.{2}/, '');
     p = p.replace(/board member photos/gi, 'Board Member Photos');
     if (/Pinaki-Mohanty/i.test(p)) {
-      return '/Board Member Photos/png/Pinaki-Mohanty.png';
+      return `${getBasePath()}/Board Member Photos/png/Pinaki-Mohanty.png`;
     }
     if (!p.startsWith('/')) p = '/' + p;
-    return encodeURI(p);
+    return `${getBasePath()}${encodeURI(p)}`;
   };
 
   useEffect(() => {
     const slugify = (s) => String(s || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
     async function load() {
       try {
-        const manifestRes = await fetch('/Blog/blog-posts.json');
+        const manifestRes = await fetch(`${getBasePath()}/Blog/blog-posts.json`);
         const manifest = await manifestRes.json();
         const list = Array.isArray(manifest) ? manifest : (manifest?.blogPosts || manifest?.posts || []);
         const entry = list.find((p) => p.slug === slug || slugify(p.title) === slug);
         setMeta(entry || null);
-        const mdPath = entry?.markdownFile ? `/Blog/${entry.markdownFile}` : `/Blog/blog posts/${slug}.md`;
+        const mdPath = entry?.markdownFile ? `${getBasePath()}/Blog/${entry.markdownFile}` : `${getBasePath()}/Blog/blog posts/${slug}.md`;
         const res = await fetch(encodeURI(mdPath));
         if (!res.ok) throw new Error('Not found');
         const txt = await res.text();

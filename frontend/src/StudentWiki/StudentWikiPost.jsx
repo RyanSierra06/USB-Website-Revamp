@@ -4,6 +4,11 @@ import Navbar from '../components/Navbar';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
+// Get the base path for assets
+const getBasePath = () => {
+  return '/USB-Website-Revamp';
+};
+
 export default function StudentWikiPost() {
   const { slug } = useParams();
   const [content, setContent] = useState('');
@@ -14,12 +19,12 @@ export default function StudentWikiPost() {
     const slugify = (s) => String(s || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
     async function load() {
       try {
-        const manifestRes = await fetch('/Student Wiki/student-wiki-posts.json');
+        const manifestRes = await fetch(`${getBasePath()}/Student Wiki/student-wiki-posts.json`);
         const manifest = await manifestRes.json();
         const list = manifest?.studentWikiPosts || [];
         const entry = list.find((p) => p.slug === slug || slugify(p.title) === slug);
         setMeta(entry || null);
-        const mdPath = entry?.markdownFile ? `/Student Wiki/${entry.markdownFile}` : `/Student Wiki/wiki posts/${slug}.md`;
+        const mdPath = entry?.markdownFile ? `${getBasePath()}/Student Wiki/${entry.markdownFile}` : `${getBasePath()}/Student Wiki/wiki posts/${slug}.md`;
         const res = await fetch(encodeURI(mdPath));
         if (!res.ok) throw new Error('Not found');
         const txt = await res.text();
@@ -33,11 +38,14 @@ export default function StudentWikiPost() {
   }, [slug]);
 
   const resolveAuthorImage = (imgPath) => {
-    if (!imgPath) return '/Board Member Photos/png/None.png';
-    let p = String(imgPath).replace(/^\.\./, '');
+    if (!imgPath) return `${getBasePath()}/Board Member Photos/png/None.png`;
+    let p = String(imgPath).replace(/^\.{2}/, '');
     p = p.replace(/board member photos/gi, 'Board Member Photos');
+    if (/Pinaki-Mohanty/i.test(p)) {
+      return `${getBasePath()}/Board Member Photos/png/Pinaki-Mohanty.png`;
+    }
     if (!p.startsWith('/')) p = '/' + p;
-    return encodeURI(p);
+    return `${getBasePath()}${encodeURI(p)}`;
   };
 
   return (
@@ -64,7 +72,7 @@ export default function StudentWikiPost() {
                         const fallback = current.replace('/webp/', '/png/').replace(/\.webp$/i, '.png');
                         e.currentTarget.src = fallback;
                       } else {
-                        e.currentTarget.src = '/Board Member Photos/png/None.png';
+                        e.currentTarget.src = `${getBasePath()}/Board Member Photos/png/None.png`;
                       }
                     }}
                   />

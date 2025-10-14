@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import { Search } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
+
+// Get the base path for assets
+const getBasePath = () => {
+  return '/USB-Website-Revamp';
+};
 
 export default function StudentWikiList() {
   const [posts, setPosts] = useState([]);
@@ -11,7 +16,7 @@ export default function StudentWikiList() {
   const location = useLocation();
 
   useEffect(() => {
-    fetch('/Student Wiki/student-wiki-posts.json')
+    fetch(`${getBasePath()}/Student Wiki/student-wiki-posts.json`)
       .then((r) => r.json())
       .then((data) => setPosts(data?.studentWikiPosts || []))
       .finally(() => setLoading(false));
@@ -48,11 +53,14 @@ export default function StudentWikiList() {
   }, [posts]);
 
   const resolveAuthorImage = (imgPath) => {
-    if (!imgPath) return '/Board Member Photos/png/None.png';
-    let p = String(imgPath).replace(/^\.\./, '');
+    if (!imgPath) return `${getBasePath()}/Board Member Photos/png/None.png`;
+    let p = String(imgPath).replace(/^\.{2}/, '');
     p = p.replace(/board member photos/gi, 'Board Member Photos');
+    if (/Pinaki-Mohanty/i.test(p)) {
+      return `${getBasePath()}/Board Member Photos/png/Pinaki-Mohanty.png`;
+    }
     if (!p.startsWith('/')) p = '/' + p;
-    return encodeURI(p);
+    return `${getBasePath()}${encodeURI(p)}`;
   };
 
   const normalize = (s) => (s || '').toString().toLowerCase();
@@ -331,7 +339,7 @@ export default function StudentWikiList() {
                   <p className="font-raleway text-sm mt-1" style={{ color: '#333333FF' }}>Tip: Read about how to optimize your search.</p>
                 </div>
               ) : filtered.map((p, i) => (
-                <a href={`/student-wiki/${(p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`} key={`wiki-${i}`} className="relative bg-white rounded-2xl shadow p-6 border transition-colors duration-150 hover:bg-gray-200" style={{ borderColor: '#9CA3AF', textDecoration: 'none' }}>
+                <Link to={`/student-wiki/${(p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`} key={`wiki-${i}`} className="relative bg-white rounded-2xl shadow p-6 border transition-colors duration-150 hover:bg-gray-200" style={{ borderColor: '#9CA3AF', textDecoration: 'none' }}>
 
                   {p.date && (
                     <span className="absolute top-4 right-4 font-raleway text-xs" style={{ color: '#333333FF' }}>{p.date}</span>
@@ -352,7 +360,7 @@ export default function StudentWikiList() {
                             const fallback = current.replace('/webp/', '/png/').replace(/\.webp$/i, '.png');
                             e.currentTarget.src = fallback;
                           } else {
-                            e.currentTarget.src = '/Board Member Photos/png/None.png';
+                            e.currentTarget.src = `${getBasePath()}/Board Member Photos/png/None.png`;
                           }
                         }}
                       />
@@ -371,7 +379,7 @@ export default function StudentWikiList() {
                         ))}
                     </div>
                   )}
-                </a>
+                </Link>
               ))}
               </div>
             </div>

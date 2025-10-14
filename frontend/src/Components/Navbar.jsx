@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
+const getBasePath = () => {
+  return '/USB-Website-Revamp/';
+};
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,14 +33,14 @@ const Navbar = () => {
   return (
     <nav className="px-8 py-1 shadow-lg relative" style={{ backgroundColor: '#FFCA44FF' }}>
       <div className="w-full flex items-center justify-between">
-        <a href="/" className="flex items-center">
+        <Link to="//" className="flex items-center">
           <img 
-            src="/Logos & Icons/usb logos/USB_Long_Logo_Black_White.svg" 
+            src={`${getBasePath()}/Logos & Icons/usb logos/USB_Long_Logo_Black_White.svg`}
             alt="USB Logo" 
             className="h-24 w-10"
             style={{ width: '300px', cursor: 'pointer' }}
           />
-        </a>
+        </Link>
 
         {isMobile && (
           <button
@@ -59,36 +64,36 @@ const Navbar = () => {
 
         {!isMobile && (
           <div className="flex space-x-8">
-          <a href="/initiatives/blog" className={linkBaseClass} style={linkStyle}>
+          <Link to="/initiatives/blog" className={linkBaseClass} style={linkStyle}>
             <span className="relative">
               Blog
               <span className="absolute left-0 -bottom-1 block w-full h-0.5 bg-[#000000F2] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
             </span>
-          </a>
-          <a href="/student-wiki" className={linkBaseClass} style={linkStyle}>
+          </Link>
+          <Link to="/student-wiki" className={linkBaseClass} style={linkStyle}>
             <span className="relative">
               Student Wiki
               <span className="absolute left-0 -bottom-1 block w-full h-0.5 bg-[#000000F2] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
             </span>
-          </a>
+          </Link>
           <a href="https://usb.notion.site/fc8013a0d21a4483982d126cad0c372f?v=c2423acbb3f54dca8e902e84c013aa05" target="_blank" rel="noopener noreferrer" className={linkBaseClass} style={linkStyle}>
             <span className="relative">
               Tutor List
               <span className="absolute left-0 -bottom-1 block w-full h-0.5 bg-[#000000F2] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
             </span>
           </a>
-          <a href="/initiatives" className={linkBaseClass} style={linkStyle}>
+          <Link to="/initiatives" className={linkBaseClass} style={linkStyle}>
             <span className="relative">
               Initiatives
               <span className="absolute left-0 -bottom-1 block w-full h-0.5 bg-[#000000F2] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
             </span>
-          </a>
-          <a href="/contact" className={linkBaseClass} style={linkStyle}>
+          </Link>
+          <Link to="/contact" className={linkBaseClass} style={linkStyle}>
             <span className="relative">
               Contact Us
               <span className="absolute left-0 -bottom-1 block w-full h-0.5 bg-[#000000F2] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
             </span>
-          </a>
+          </Link>
           </div>
         )}
       </div>
@@ -96,8 +101,8 @@ const Navbar = () => {
       {isOpen && isMobile && (
         <div id="mobile-menu" className="absolute left-0 right-0 top-full shadow-lg z-50" style={{ backgroundColor: '#FFCA44FF' }} role="menu" aria-label="Mobile navigation">
           <div className="flex flex-col">
-            <a 
-              href="/initiatives/blog" 
+            <Link 
+              to="/initiatives/blog"
               className="group px-6 py-4 font-raleway text-xl border-b transition-transform duration-150 hover:scale-[1.02]" 
               style={{ 
                 color: '#000000F2', 
@@ -121,9 +126,9 @@ const Navbar = () => {
                 Blog
                 <span className="absolute left-0 -bottom-1 block w-full h-0.5 bg-[#000000F2] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
               </span>
-            </a>
-            <a 
-              href="/student-wiki" 
+            </Link>
+            <Link 
+              to="/student-wiki"
               className="group px-6 py-4 font-raleway text-xl border-b transition-transform duration-150 hover:scale-[1.02]" 
               style={{ 
                 color: '#000000F2', 
@@ -147,7 +152,7 @@ const Navbar = () => {
                 Student Wiki
                 <span className="absolute left-0 -bottom-1 block w-full h-0.5 bg-[#000000F2] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
               </span>
-            </a>
+            </Link>
             <a 
               href="https://usb.notion.site/fc8013a0d21a4483982d126cad0c372f?v=c2423acbb3f54dca8e902e84c013aa05" 
               target="_blank" 
@@ -176,8 +181,8 @@ const Navbar = () => {
                 <span className="absolute left-0 -bottom-1 block w-full h-0.5 bg-[#000000F2] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
               </span>
             </a>
-            <a 
-              href="/initiatives" 
+            <Link 
+              to="/initiatives"
               className="group px-6 py-4 font-raleway text-xl border-b transition-transform duration-150 hover:scale-[1.02]" 
               style={{ 
                 color: '#000000F2', 
@@ -201,9 +206,9 @@ const Navbar = () => {
                 Initiatives
                 <span className="absolute left-0 -bottom-1 block w-full h-0.5 bg-[#000000F2] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
               </span>
-            </a>
-            <a 
-              href="/contact" 
+            </Link>
+            <Link 
+              to="/contact"
               className="group px-6 py-4 font-raleway text-xl transition-transform duration-150 hover:scale-[1.02]" 
               style={{ 
                 color: '#000000F2', 
@@ -226,7 +231,7 @@ const Navbar = () => {
                 Contact Us
                 <span className="absolute left-0 -bottom-1 block w-full h-0.5 bg-[#000000F2] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
               </span>
-            </a>
+            </Link>
           </div>
         </div>
       )}

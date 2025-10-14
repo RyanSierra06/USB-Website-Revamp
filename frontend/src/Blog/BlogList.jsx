@@ -2,12 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
+// Get the base path for assets
+const getBasePath = () => {
+  return '/USB-Website-Revamp';
+};
+
 export default function BlogList() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/Blog/blog-posts.json')
+    fetch(`${getBasePath()}/Blog/blog-posts.json`)
       .then((r) => r.json())
       .then((data) => {
         const list = Array.isArray(data) ? data : (data?.blogPosts || data?.posts || []);
@@ -17,14 +22,14 @@ export default function BlogList() {
   }, []);
 
   const resolveAuthorImage = (imgPath) => {
-    if (!imgPath) return '/Board Member Photos/png/None.png';
+    if (!imgPath) return `${getBasePath()}/Board Member Photos/png/None.png`;
     let p = imgPath.replace(/^\.{2}/, '');
     p = p.replace(/board member photos/gi, 'Board Member Photos');
     if (!p.startsWith('/')) p = '/' + p;
     if (/Pinaki-Mohanty/i.test(p)) {
-      return '/Board Member Photos/png/Pinaki-Mohanty.png';
+      return `${getBasePath()}/Board Member Photos/png/Pinaki-Mohanty.png`;
     }
-    return encodeURI(p);
+    return `${getBasePath()}${encodeURI(p)}`;
   };
 
   const slugify = (s) =>
@@ -83,7 +88,7 @@ export default function BlogList() {
                             const fallback = current.replace('/webp/', '/png/').replace(/\.webp$/i, '.png');
                             e.currentTarget.src = fallback;
                           } else {
-                            e.currentTarget.src = '/Board Member Photos/png/None.png';
+                            e.currentTarget.src = `${getBasePath()}/Board Member Photos/png/None.png`;
                           }
                         }}
                       />

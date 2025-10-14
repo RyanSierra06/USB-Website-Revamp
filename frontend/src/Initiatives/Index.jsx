@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import { motion } from 'framer-motion';
 
+// Get the base path for assets
+const getBasePath = () => {
+  return '/USB-Website-Revamp';
+};
+
 export default function InitiativesIndex() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -9,23 +14,21 @@ export default function InitiativesIndex() {
 
   useEffect(() => {
     const load = async () => {
-      const tryPaths = ['/initiatives/initiatives.json', '/data/initiatives.json'];
-      for (const p of tryPaths) {
-        try {
-          const res = await fetch(p);
-          if (!res.ok) throw new Error(`Failed to fetch ${p} (${res.status})`);
-          const data = await res.json();
-          if (Array.isArray(data) && data.length) {
-            setItems(data);
-            setError('');
-            return;
-          }
-        } catch (e) {
-
+      try {
+        const res = await fetch(`${getBasePath()}/initiatives/initiatives.json`);
+        if (!res.ok) throw new Error(`Failed to fetch initiatives.json (${res.status})`);
+        const data = await res.json();
+        if (Array.isArray(data) && data.length) {
+          setItems(data);
+          setError('');
+        } else {
+          setItems([]);
+          setError('No initiatives found.');
         }
+      } catch (e) {
+        setItems([]);
+        setError('Unable to load initiatives.');
       }
-      setItems([]);
-      setError('Unable to load initiatives.');
     };
     load().finally(() => setLoading(false));
   }, []);
@@ -35,7 +38,7 @@ export default function InitiativesIndex() {
     if (String(item.link).startsWith('http')) {
       window.open(item.link, '_blank');
     } else {
-      window.location.href = item.link;
+      window.location.href = `${getBasePath()}${item.link}`;
     }
   };
 
@@ -67,7 +70,7 @@ export default function InitiativesIndex() {
                   transition={{ duration: 0.15, ease: 'easeOut' }}
                 >
                   <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-gray-200 flex items-center justify-center">
-                    <img src="/Logos & Icons/usb logos/USB_Icon_Black_Gold_Small.webp" alt="USB Icon" className="w-12 h-12" />
+                    <img src={`${getBasePath()}/Logos & Icons/usb logos/USB_Icon_Black_Gold_Small.webp`} alt="USB Icon" className="w-12 h-12" />
                   </div>
                   <div className="flex-1">
                     <p className="font-montserrat font-bold text-2xl mb-2 relative inline-block" style={{ color: '#333333FF' }}>

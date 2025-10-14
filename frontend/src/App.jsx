@@ -10,7 +10,7 @@ import { BrowserRouter, HashRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
 
 function App() {
-  // Use BrowserRouter with basename for GitHub Pages compatibility
+  // Use BrowserRouter with basename for consistent base path
   return (
     <BrowserRouter basename="/USB-Website-Revamp">
       <Routes>

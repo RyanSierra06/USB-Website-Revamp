@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar';
 
+// Get the base path for assets
+const getBasePath = () => {
+  return '/USB-Website-Revamp';
+};
+
 export default function ClubHub() {
   const [clubs, setClubs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -8,7 +13,7 @@ export default function ClubHub() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch('/initiatives/club hub/clubs.json');
+        const res = await fetch(`${getBasePath()}/initiatives/club hub/clubs.json`);
         const data = await res.json();
         setClubs(Array.isArray(data) ? data : []);
       } catch (_) {
@@ -23,13 +28,22 @@ export default function ClubHub() {
   const iconSrc = (type) => {
     switch (type) {
       case 'instagram':
-        return '/initiatives/club hub/instagram.webp';
+        return `${getBasePath()}/initiatives/club hub/instagram.webp`;
       case 'linkedin':
-        return '/initiatives/club hub/linkedin.webp';
+        return `${getBasePath()}/initiatives/club hub/linkedin.webp`;
       case 'email':
       default:
-        return '/initiatives/club hub/email.png';
+        return `${getBasePath()}/initiatives/club hub/email.png`;
     }
+  };
+
+  const resolveClubLogo = (logoPath) => {
+    if (!logoPath) return '';
+    if (logoPath.startsWith('http')) return logoPath;
+    if (logoPath.startsWith('/')) {
+      return `${getBasePath()}${logoPath}`;
+    }
+    return `${getBasePath()}/${logoPath}`;
   };
 
   return (
@@ -55,7 +69,7 @@ export default function ClubHub() {
             </div>
             <div className="w-full flex items-center justify-center">
               <img
-                src={'/initiatives/club hub/clubhub.png'}
+                src={`${getBasePath()}/initiatives/club hub/clubhub.png`}
                 alt="Club Hub"
                 className="rounded-xl w-full max-w-xl md:max-w-2xl"
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
@@ -70,7 +84,7 @@ export default function ClubHub() {
               <div key={`${c.name}-${idx}`} className="flex flex-col md:flex-row items-center md:items-stretch rounded-2xl" style={{ boxShadow: '0 0 9px 2px rgb(226 226 226)' }}>
                 <div className="md:w-1/5 w-full p-6 flex items-center justify-center">
                   <img
-                    src={c.logo}
+                    src={resolveClubLogo(c.logo)}
                     alt={c.name}
                     className="rounded-xl"
                     style={{ width: 170, height: 'auto' }}
