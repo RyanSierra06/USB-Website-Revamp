@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Navbar from './Components/Navbar.jsx';
 import { BookOpen, Compass, ChevronLeft, ChevronRight, Send, ChevronDown, ChevronUp, Heart, MessageCircle, Bookmark, MoreHorizontal } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import useEmblaCarousel from 'embla-carousel-react';
 
 // Get the base path for assets
@@ -14,6 +14,7 @@ export default function Homepage() {
   const [instagramPosts, setInstagramPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchInstagramPosts = async () => {
@@ -669,47 +670,47 @@ export default function Homepage() {
                 const getLink = (link) => {
                   if (!link) return undefined;
                   if (link.startsWith('http')) return link;
-                  return link;
+                  return link.startsWith('/') ? link : `/${link}`;
                 };
+
                 const link = getLink(item.link);
                 const isExternal = link && link.startsWith('http');
-                
-                const content = (
-                  <motion.div
-                      key={`${item.title}-${idx}`}
-                      className="group flex items-center gap-4 rounded-xl shadow-md p-4 hover:shadow-xl w-full cursor-pointer"
-                      style={{ backgroundColor: '#333333FF' }}
-                      initial={{ scale: 1 }}
-                      whileHover={{ scale: 1.03 }}
-                      transition={{ type: 'tween', duration: 0.22, ease: 'easeOut' }}
-                      whileTap={{ scale: 1.02 }}
-                      onClick={() => {
-                        if (link) {
+
+                return (
+                    <motion.div
+                        key={`${item.title}-${idx}`}
+                        className="group flex items-center gap-4 rounded-xl shadow-md p-4 hover:shadow-xl w-full cursor-pointer"
+                        style={{ backgroundColor: '#333333FF' }}
+                        whileHover={{ scale: 1.03 }}
+                        transition={{ type: 'tween', duration: 0.22, ease: 'easeOut' }}
+                        onClick={() => {
+                          if (!link) return;
+
                           if (isExternal) {
                             window.open(link, '_blank', 'noopener,noreferrer');
                           } else {
-                            window.location.href = link;
+                            navigate(link);
                           }
-                        }
-                      }}
-                  >
-                    <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden flex items-center justify-center" style={{ backgroundColor: '#333333FF' }}>
-                      <img src={`${getBasePath()}/Logos & Icons/usb logos/USB_Icon_Black_Gold_Small.webp`} alt="USB Icon" className="w-12 h-12" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="relative">
-                        <p className="font-montserrat font-bold text-xl mb-1 underline decoration-transparent group-hover:decoration-white underline-offset-4 transition-colors duration-200" style={{ color: '#FFFFFFFF' }}>{item.title}</p>
-                        <div
-                            className="absolute left-0 -bottom-1 h-[2px] bg-white transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"
+                        }}
+                    >
+                      <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden flex items-center justify-center">
+                        <img
+                            src={`${getBasePath()}/Logos & Icons/usb logos/USB_Icon_Black_Gold_Small.webp`}
+                            alt="USB Icon"
+                            className="w-12 h-12"
                         />
                       </div>
-                      <p className="font-raleway text-sm" style={{ color: '#FFFFFFFF' }}>
-                        {item.description || 'Short description of the initiative goes here. This can be 1–2 lines describing purpose.'}
-                      </p>
-                    </div>
-                  </motion.div>
+
+                      <div className="flex-1">
+                        <p className="font-montserrat font-bold text-xl mb-1 text-white">
+                          {item.title}
+                        </p>
+                        <p className="font-raleway text-sm text-white">
+                          {item.description}
+                        </p>
+                      </div>
+                    </motion.div>
                 );
-                return content;
               })}
             </div>
           </div>
