@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 // Get the base path for assets
 const getBasePath = () => {
-  return '/USB-Website-Revamp';
+  return '';
 };
 
 export default function InitiativesIndex() {

@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar';
 
 // Get the base path for assets
 const getBasePath = () => {
-  return '/USB-Website-Revamp';
+  return '';
 };
 
 export default function ClubHub() {
@@ -13,7 +13,7 @@ export default function ClubHub() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${getBasePath()}/initiatives/club hub/clubs.json`);
+        const res = await fetch(`${getBasePath()}/initiatives/Club Hub/clubs.json`);
         const data = await res.json();
         setClubs(Array.isArray(data) ? data : []);
       } catch (_) {
@@ -28,12 +28,12 @@ export default function ClubHub() {
   const iconSrc = (type) => {
     switch (type) {
       case 'instagram':
-        return `${getBasePath()}/initiatives/club hub/instagram.webp`;
+        return encodeURI(`${getBasePath()}/initiatives/Club Hub/instagram.webp`);
       case 'linkedin':
-        return `${getBasePath()}/initiatives/club hub/linkedin.webp`;
+        return encodeURI(`${getBasePath()}/initiatives/Club Hub/linkedin.webp`);
       case 'email':
       default:
-        return `${getBasePath()}/initiatives/club hub/email.png`;
+        return encodeURI(`${getBasePath()}/initiatives/Club Hub/email.png`);
     }
   };
 
@@ -41,9 +41,9 @@ export default function ClubHub() {
     if (!logoPath) return '';
     if (logoPath.startsWith('http')) return logoPath;
     if (logoPath.startsWith('/')) {
-      return `${getBasePath()}${logoPath}`;
+      return encodeURI(`${getBasePath()}${logoPath}`);
     }
-    return `${getBasePath()}/${logoPath}`;
+    return encodeURI(`${getBasePath()}/${logoPath}`);
   };
 
   return (
@@ -69,7 +69,7 @@ export default function ClubHub() {
             </div>
             <div className="w-full flex items-center justify-center">
               <img
-                src={`${getBasePath()}/initiatives/club hub/clubhub.png`}
+                src={encodeURI(`${getBasePath()}/initiatives/Club Hub/clubhub.png`)}
                 alt="Club Hub"
                 className="rounded-xl w-full max-w-xl md:max-w-2xl"
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}

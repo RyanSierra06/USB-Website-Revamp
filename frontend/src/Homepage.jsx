@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Navbar from './Components/Navbar';
 import { BookOpen, Compass, ChevronLeft, ChevronRight, Send, ChevronDown, ChevronUp, Heart, MessageCircle, Bookmark, MoreHorizontal } from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import useEmblaCarousel from 'embla-carousel-react';
 
 // Get the base path for assets
 const getBasePath = () => {
-  return '/USB-Website-Revamp';
+  return '';
 };
 
 export default function Homepage() {
@@ -77,17 +78,15 @@ export default function Homepage() {
     if (url.startsWith('http:')) url = url.replace(/^http:/i, 'https:');
     if (/^https?:/i.test(url)) return url;
     
-    // Handle local paths - if it already has the base path, use as is
+    // Strip /USB-Website-Revamp/ from the beginning if present
     if (url.startsWith('/USB-Website-Revamp/')) {
-      console.log('Instagram image URL:', url);
-      return url;
+      url = url.substring('/USB-Website-Revamp'.length);
     }
     
-    // For relative paths, add the base path
+    // Handle local paths - if it already starts with /, use as is
     if (url.startsWith('/')) {
-      const fullUrl = `${getBasePath()}${url}`;
-      console.log('Instagram image URL (relative):', fullUrl);
-      return fullUrl;
+      console.log('Instagram image URL:', url);
+      return url;
     }
     
     // For other paths, add the base path
@@ -230,129 +229,22 @@ export default function Homepage() {
     loadInitiatives();
   }, []);
 
-  const [trackIndex, setTrackIndex] = useState(3);
-  const [enableAnim, setEnableAnim] = useState(true);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const containerRef = useRef(null);
-  const firstCardRef = useRef(null);
-  const [unitWidth, setUnitWidth] = useState(0);
-  const getVisibleCount = () => {
-    if (typeof window === 'undefined') return 3;
-    const width = window.innerWidth;
-    if (width < 480) return 1;
-    if (width < 900) return 1;
-    if (width < 1250) return 2;
-    return 3;
-  };  const [visibleCount, setVisibleCount] = useState(getVisibleCount());
-  const [gapPx] = useState(24);
+  // Embla Carousel setup with loop enabled for infinite scroll
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    loop: true,
+    align: 'start',
+    slidesToScroll: 1,
+    duration: 25,
+    dragFree: false
+  });
 
-  const extendedPosts = useMemo(() => {
-    if (!instagramPosts || instagramPosts.length === 0) return [];
-    return [...instagramPosts, ...instagramPosts, ...instagramPosts];
-  }, [instagramPosts]);
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
 
-  useEffect(() => {
-    if (!extendedPosts || extendedPosts.length === 0) return;
-    const candidates = [
-      trackIndex - 4,
-      trackIndex - 3,
-      trackIndex - 2,
-      trackIndex,
-      trackIndex + 1,
-      trackIndex + 3
-    ];
-    candidates.forEach((ci) => {
-      const idx = (ci % extendedPosts.length + extendedPosts.length) % extendedPosts.length;
-      const p = extendedPosts[idx];
-      const url = getImageUrl(p);
-      if (!url) return;
-      const img = new Image();
-      img.decoding = 'async';
-      img.src = url;
-    });
-  }, [trackIndex, extendedPosts]);
-
-  useEffect(() => {
-    if (!instagramPosts || instagramPosts.length === 0) return;
-    setEnableAnim(false);
-    setTrackIndex(instagramPosts.length + visibleCount);
-  }, [instagramPosts, visibleCount]);
-
-  useEffect(() => {
-    if (!firstCardRef.current) return;
-    const cardW = firstCardRef.current.offsetWidth || 320;
-    setUnitWidth(cardW + gapPx);
-  }, [instagramPosts, gapPx]);
-
-  useEffect(() => {
-    const onResize = () => {
-      const newCount = getVisibleCount();
-      setVisibleCount(newCount);
-
-      if (instagramPosts && instagramPosts.length > 0) {
-        setEnableAnim(false);
-        setTrackIndex(instagramPosts.length + newCount);
-      }
-    };
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, [instagramPosts]);
-
-  useEffect(() => {
-    if (!containerRef.current || !unitWidth) return;
-
-    const checkIntersection = () => {
-      const container = containerRef.current;
-      if (!container) return;
-
-      const containerRect = container.getBoundingClientRect();
-      const containerWidth = containerRect.width;
-      const cardWidth = unitWidth;
-      const arrowSize = 64;
-      const arrowOffset = 8;
-
-      const leftArrowRight = arrowOffset + arrowSize;
-      const rightArrowLeft = containerWidth - arrowOffset - arrowSize;
-      const cardsLeft = (containerWidth - (cardWidth * visibleCount)) / 2;
-      const cardsRight = cardsLeft + (cardWidth * visibleCount);
-
-      const leftIntersects = leftArrowRight > cardsLeft;
-      const rightIntersects = rightArrowLeft < cardsRight;
-
-      if ((leftIntersects || rightIntersects) && visibleCount > 1) {
-        const newCount = Math.max(1, visibleCount - 1);
-        if (newCount !== visibleCount) {
-          setVisibleCount(newCount);
-          setEnableAnim(false);
-          setTrackIndex(instagramPosts.length + newCount);
-        }
-      }
-    };
-
-    const timeoutId = setTimeout(checkIntersection, 100);
-    return () => clearTimeout(timeoutId);
-  }, [unitWidth, visibleCount, instagramPosts]);
-
-  const incrementIndex = (delta) => {
-    setEnableAnim(true);
-    setTrackIndex((prev) => {
-      const len = instagramPosts.length || 0;
-      if (len === 0) return prev;
-      return prev + delta;
-    });
-  };
-
-  const nextSlide = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    incrementIndex(1);
-  };
-
-  const prevSlide = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    incrementIndex(-1);
-  };
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
   return (
       <div className="min-h-screen bg-white">
@@ -529,7 +421,7 @@ export default function Homepage() {
             <div className="relative max-w-7xl mx-auto">
               <div className="flex items-center justify-center">
                 <button
-                    onClick={prevSlide}
+                    onClick={scrollPrev}
                     className="absolute left-2 z-20 rounded-full bg-white transition-all duration-300 ease-in-out flex items-center justify-center shadow-xl"
                     style={{
                       top: '50%',
@@ -540,40 +432,28 @@ export default function Homepage() {
                       height: '64px',
                       borderRadius: '50%',
                       outline: 'none',
-                      border: 'none'
+                      border: 'none',
+                      cursor: 'pointer'
                     }}
                 >
                   <ChevronLeft size={32} className="text-gray-800" style={{ pointerEvents: 'none' }} />
                 </button>
 
-                <div className="relative w-full px-20" ref={containerRef} style={{ minHeight: '400px' }}>
-                  <div
-                      className="mx-auto overflow-hidden"
-                      style={{ width: `${Math.max(0, ((unitWidth || (320 + gapPx)) * visibleCount) - gapPx)}px` }}
-                  >
-                    <motion.div
-                        className="flex gap-6"
-                        animate={{ x: -(trackIndex - visibleCount) * unitWidth }}
-                        transition={enableAnim ? { type: 'spring', stiffness: 260, damping: 28 } : { duration: 0 }}
-                        onUpdate={() => {}}
-                        onAnimationComplete={() => {
-
-                          const len = instagramPosts.length || 0;
-                          if (len === 0) { setIsAnimating(false); return; }
-
-                          const min = len + visibleCount;
-                          const max = 2 * len; // inclusive
-                          if (trackIndex < min || trackIndex > max) {
-                            const base = trackIndex - min;
-                            const wrapped = min + (((base % len) + len) % len);
-                            setEnableAnim(false);
-                            setTrackIndex(wrapped);
-                          }
-                          setIsAnimating(false);
-                        }}
-                    >
-                      {(instagramPosts && instagramPosts.length > 0 ? extendedPosts : Array.from({ length: 3 })).map((post, index) => (
-                          <div key={`${post?.id || 'p'}-${index}`} ref={index === trackIndex ? firstCardRef : null} className="flex-none w-80 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2" style={{ borderColor: '#000000' }}>
+                <div className="relative w-full px-20" style={{ minHeight: '400px' }}>
+                  <div className="embla">
+                    <div className="embla__viewport" ref={emblaRef}>
+                      <div className="embla__container">
+                      {(instagramPosts && instagramPosts.length > 0 ? instagramPosts : Array.from({ length: 3 })).map((post, index) => {
+                        return (
+                          <div 
+                            key={`${post?.id || 'p'}-${index}`}
+                            className="embla__slide"
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'center'
+                            }}
+                          >
+                            <div className="w-80 max-w-full bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2" style={{ borderColor: '#000000' }}>
                             <div className="flex items-center justify-between px-4 py-3">
                               <div className="flex items-center gap-3">
                                 <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
@@ -648,13 +528,16 @@ export default function Homepage() {
                                 </div>
                             )}
                           </div>
-                      ))}
-                    </motion.div>
+                          </div>
+                        );
+                      })}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
                 <button
-                    onClick={nextSlide}
+                    onClick={scrollNext}
                     className="absolute right-2 z-20 rounded-full bg-white transition-all duration-300 ease-in-out flex items-center justify-center shadow-xl"
                     style={{
                       top: '50%',
@@ -665,7 +548,8 @@ export default function Homepage() {
                       height: '64px',
                       borderRadius: '50%',
                       outline: 'none',
-                      border: 'none'
+                      border: 'none',
+                      cursor: 'pointer'
                     }}
                 >
                   <ChevronRight size={32} className="text-gray-800" style={{ pointerEvents: 'none' }} />
@@ -686,11 +570,11 @@ export default function Homepage() {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
               {boardMembers.map((m, idx) => {
-                const photoSrc = `${getBasePath()}/Board Member Photos/${m.photo}`;
+                const photoSrc = encodeURI(`${getBasePath()}/Board Member Photos/${m.photo}`);
                 const card = (
                     <div key={`${m.name}-${idx}`} className="group flex flex-col items-center text-center">
                       <div className="relative w-44 h-44 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden shadow-lg transition-transform duration-100 ease-out group-hover:scale-105" style={{ willChange: 'transform' }}>
-                        <img src={photoSrc} alt={m.name} className="w-full h-full object-cover will-change-auto" loading="eager" decoding="async" fetchpriority="high" width="512" height="512" onError={(e) => { e.currentTarget.src = `${getBasePath()}/Board Member Photos/png/None.png`; }} />
+                        <img src={photoSrc} alt={m.name} className="w-full h-full object-cover will-change-auto" loading="eager" decoding="async" fetchpriority="high" width="512" height="512" onError={(e) => { e.currentTarget.src = encodeURI(`${getBasePath()}/Board Member Photos/png/None.png`); }} />
                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-75 ease-out bg-black/30 px-4 text-center" style={{ willChange: 'opacity' }}>
                           <div className="space-y-1">
                             <p className="font-montserrat font-bold text-white text-lg leading-snug">{m.name}</p>
@@ -740,11 +624,11 @@ export default function Homepage() {
               {showAlumni && (
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
                     {alumniMembers.map((m, idx) => {
-                      const photoSrc = `${getBasePath()}/Board Member Photos/${m.photo}`;
+                      const photoSrc = encodeURI(`${getBasePath()}/Board Member Photos/${m.photo}`);
                       const card = (
                           <div key={`${m.name}-${idx}`} className="group flex flex-col items-center text-center">
                             <div className="relative w-44 h-44 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden shadow-md transition-transform duration-100 ease-out group-hover:scale-105" style={{ willChange: 'transform' }}>
-                              <img src={photoSrc} alt={m.name} className="w-full h-full object-cover will-change-auto" loading="eager" decoding="async" width="512" height="512" onError={(e) => { e.currentTarget.src = `${getBasePath()}/Board Member Photos/png/None.png`; }} />
+                              <img src={photoSrc} alt={m.name} className="w-full h-full object-cover will-change-auto" loading="eager" decoding="async" width="512" height="512" onError={(e) => { e.currentTarget.src = encodeURI(`${getBasePath()}/Board Member Photos/png/None.png`); }} />
                               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-75 ease-out bg-black/30 px-4 text-center" style={{ willChange: 'opacity' }}>
                                 <div className="space-y-1">
                                   <p className="font-montserrat font-bold text-white text-lg leading-snug">{m.name}</p>
@@ -785,20 +669,29 @@ export default function Homepage() {
                 const getLink = (link) => {
                   if (!link) return undefined;
                   if (link.startsWith('http')) return link;
-                  return `${getBasePath()}${link}`;
+                  return link;
                 };
-                return (
-                  <motion.a
+                const link = getLink(item.link);
+                const isExternal = link && link.startsWith('http');
+                
+                const content = (
+                  <motion.div
                       key={`${item.title}-${idx}`}
-                      href={getLink(item.link)}
-                      target={item.link ? '_blank' : undefined}
-                      rel={item.link ? 'noopener noreferrer' : undefined}
-                      className="group flex items-center gap-4 rounded-xl shadow-md p-4 hover:shadow-xl w-full"
+                      className="group flex items-center gap-4 rounded-xl shadow-md p-4 hover:shadow-xl w-full cursor-pointer"
                       style={{ backgroundColor: '#333333FF' }}
                       initial={{ scale: 1 }}
                       whileHover={{ scale: 1.03 }}
                       transition={{ type: 'tween', duration: 0.22, ease: 'easeOut' }}
                       whileTap={{ scale: 1.02 }}
+                      onClick={() => {
+                        if (link) {
+                          if (isExternal) {
+                            window.open(link, '_blank', 'noopener,noreferrer');
+                          } else {
+                            window.location.href = link;
+                          }
+                        }
+                      }}
                   >
                     <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden flex items-center justify-center" style={{ backgroundColor: '#333333FF' }}>
                       <img src={`${getBasePath()}/Logos & Icons/usb logos/USB_Icon_Black_Gold_Small.webp`} alt="USB Icon" className="w-12 h-12" />
@@ -814,8 +707,9 @@ export default function Homepage() {
                         {item.description || 'Short description of the initiative goes here. This can be 1–2 lines describing purpose.'}
                       </p>
                     </div>
-                  </motion.a>
+                  </motion.div>
                 );
+                return content;
               })}
             </div>
           </div>

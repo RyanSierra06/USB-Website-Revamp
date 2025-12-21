@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const getBasePath = () => {
-  return '/USB-Website-Revamp/';
+  return '';
 };
 
 const Navbar = () => {
@@ -33,7 +33,7 @@ const Navbar = () => {
   return (
     <nav className="px-8 py-1 shadow-lg relative" style={{ backgroundColor: '#FFCA44FF' }}>
       <div className="w-full flex items-center justify-between">
-        <Link to="//" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <img 
             src={`${getBasePath()}/Logos & Icons/usb logos/USB_Long_Logo_Black_White.svg`}
             alt="USB Logo" 

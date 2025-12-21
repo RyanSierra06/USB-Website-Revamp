@@ -6,7 +6,7 @@ import remarkGfm from 'remark-gfm';
 
 // Get the base path for assets
 const getBasePath = () => {
-  return '/USB-Website-Revamp';
+  return '';
 };
 
 export default function StudentWikiPost() {
@@ -38,14 +38,14 @@ export default function StudentWikiPost() {
   }, [slug]);
 
   const resolveAuthorImage = (imgPath) => {
-    if (!imgPath) return `${getBasePath()}/Board Member Photos/png/None.png`;
+    if (!imgPath) return encodeURI(`${getBasePath()}/Board Member Photos/png/None.png`);
     let p = String(imgPath).replace(/^\.{2}/, '');
     p = p.replace(/board member photos/gi, 'Board Member Photos');
     if (/Pinaki-Mohanty/i.test(p)) {
-      return `${getBasePath()}/Board Member Photos/png/Pinaki-Mohanty.png`;
+      return encodeURI(`${getBasePath()}/Board Member Photos/png/Pinaki-Mohanty.png`);
     }
     if (!p.startsWith('/')) p = '/' + p;
-    return `${getBasePath()}${encodeURI(p)}`;
+    return encodeURI(`${getBasePath()}${p}`);
   };
 
   return (
@@ -72,7 +72,7 @@ export default function StudentWikiPost() {
                         const fallback = current.replace('/webp/', '/png/').replace(/\.webp$/i, '.png');
                         e.currentTarget.src = fallback;
                       } else {
-                        e.currentTarget.src = `${getBasePath()}/Board Member Photos/png/None.png`;
+                        e.currentTarget.src = encodeURI(`${getBasePath()}/Board Member Photos/png/None.png`);
                       }
                     }}
                   />

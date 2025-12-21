@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 
 // Get the base path for assets
 const getBasePath = () => {
-  return '/USB-Website-Revamp';
+  return '';
 };
 
 export default function BlogList() {
@@ -22,14 +22,14 @@ export default function BlogList() {
   }, []);
 
   const resolveAuthorImage = (imgPath) => {
-    if (!imgPath) return `${getBasePath()}/Board Member Photos/png/None.png`;
+    if (!imgPath) return encodeURI(`${getBasePath()}/Board Member Photos/png/None.png`);
     let p = imgPath.replace(/^\.{2}/, '');
     p = p.replace(/board member photos/gi, 'Board Member Photos');
     if (!p.startsWith('/')) p = '/' + p;
     if (/Pinaki-Mohanty/i.test(p)) {
-      return `${getBasePath()}/Board Member Photos/png/Pinaki-Mohanty.png`;
+      return encodeURI(`${getBasePath()}/Board Member Photos/png/Pinaki-Mohanty.png`);
     }
-    return `${getBasePath()}${encodeURI(p)}`;
+    return encodeURI(`${getBasePath()}${p}`);
   };
 
   const slugify = (s) =>
@@ -88,7 +88,7 @@ export default function BlogList() {
                             const fallback = current.replace('/webp/', '/png/').replace(/\.webp$/i, '.png');
                             e.currentTarget.src = fallback;
                           } else {
-                            e.currentTarget.src = `${getBasePath()}/Board Member Photos/png/None.png`;
+                            e.currentTarget.src = encodeURI(`${getBasePath()}/Board Member Photos/png/None.png`);
                           }
                         }}
                       />
