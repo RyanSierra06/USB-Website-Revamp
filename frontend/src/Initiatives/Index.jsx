@@ -60,13 +60,19 @@ export default function InitiativesIndex() {
         <Navbar />
         <section className="py-12 px-8">
           <div className="max-w-5xl mx-auto">
-            <h1
+            <motion.h1
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
                 className="text-4xl lg:text-5xl font-montserrat font-bold text-center"
                 style={{ color: '#333333FF' }}
             >
               Initiatives
-            </h1>
-            <p
+            </motion.h1>
+            <motion.p
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.05 }}
                 className="text-center mt-3 mb-10 font-raleway"
                 style={{ color: '#333333FF' }}
             >
@@ -74,7 +80,7 @@ export default function InitiativesIndex() {
               initiatives both immediately and in the long term. Some initiatives
               have been around for a decade or more, while others come and go as
               our goals evolve.
-            </p>
+            </motion.p>
 
             {loading ? (
                 <p className="text-center font-raleway" style={{ color: '#333333FF' }}>
@@ -89,6 +95,9 @@ export default function InitiativesIndex() {
                   {items.map((item, idx) => (
                       <motion.div
                           key={`${item.title}-${idx}`}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: 0.1 + (idx * 0.05) }}
                           className="group flex items-center gap-6 rounded-2xl shadow-md p-8 w-full cursor-pointer border"
                           style={{
                             backgroundColor: '#FFFFFF',
@@ -102,7 +111,6 @@ export default function InitiativesIndex() {
                             boxShadow:
                                 '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
                           }}
-                          transition={{ duration: 0.15, ease: 'easeOut' }}
                       >
                         <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-gray-200 flex items-center justify-center">
                           <img

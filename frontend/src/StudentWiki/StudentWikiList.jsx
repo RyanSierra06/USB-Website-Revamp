@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../Components/Navbar.jsx';
 import { Search } from 'lucide-react';
 import { useLocation, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 // Get the base path for assets
 const getBasePath = () => {
@@ -304,17 +305,40 @@ export default function StudentWikiList() {
       <Navbar />
       <section className="py-12 px-8">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl lg:text-5xl font-montserrat font-bold text-center" style={{ color: '#333333FF' }}>
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="text-4xl lg:text-5xl font-montserrat font-bold text-center" 
+            style={{ color: '#333333FF' }}
+          >
             Student Wiki
-          </h1>
-          <p className="text-center mt-3 mb-10 font-raleway" style={{ color: '#333333FF' }}>
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.05 }}
+            className="text-center mt-3 mb-10 font-raleway" 
+            style={{ color: '#333333FF' }}
+          >
             Contains locally sourced, organic wisdom. Shared by the student body, curated by USB.
-          </p>
+          </motion.p>
 
           {loading ? (
-            <p className="text-center font-raleway" style={{ color: '#333333FF' }}>Loading wiki posts…</p>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              className="text-center font-raleway" 
+              style={{ color: '#333333FF' }}
+            >
+              Loading wiki posts…
+            </motion.p>
           ) : (
-            <div
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
               className="max-h-[70vh] max-w-3xl mx-auto border rounded-xl p-4 shadow-sm bg-white flex flex-col"
               style={{ borderColor: '#9CA3AF' }}
             >
@@ -334,12 +358,35 @@ export default function StudentWikiList() {
 
               <div className="grid grid-cols-1 gap-6 overflow-y-auto pr-1" style={{ scrollbarGutter: 'stable' }}>
               {filtered.length === 0 ? (
-                <div className="text-center py-10">
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-center py-10"
+                >
                   <p className="font-montserrat font-bold text-lg" style={{ color: '#333333FF' }}>No results found</p>
                   <p className="font-raleway text-sm mt-1" style={{ color: '#333333FF' }}>Tip: Read about how to optimize your search.</p>
-                </div>
+                </motion.div>
               ) : filtered.map((p, i) => (
-                <Link to={`/student-wiki/${(p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`} key={`wiki-${i}`} className="relative bg-white rounded-2xl shadow p-6 border transition-colors duration-150 hover:bg-gray-200" style={{ borderColor: '#9CA3AF', textDecoration: 'none' }}>
+                <motion.div
+                  key={`wiki-${i}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.15 + (i * 0.03) }}
+                >
+                  <Link 
+                    to={`/student-wiki/${(p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`} 
+                    className="relative bg-white rounded-2xl shadow p-6 border block transition-all duration-150" 
+                    style={{ borderColor: '#9CA3AF', textDecoration: 'none', willChange: 'transform, background-color' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#F3F4F6';
+                      e.currentTarget.style.transform = 'scale(1.02)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = '#FFFFFF';
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }}
+                  >
 
                   {p.date && (
                     <span className="absolute top-4 right-4 font-raleway text-xs" style={{ color: '#333333FF' }}>{p.date}</span>
@@ -379,10 +426,11 @@ export default function StudentWikiList() {
                         ))}
                     </div>
                   )}
-                </Link>
+                  </Link>
+                </motion.div>
               ))}
               </div>
-            </div>
+            </motion.div>
           )}
         </div>
       </section>

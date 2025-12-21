@@ -13,7 +13,8 @@ import SocialWellness from './Initiatives/SocialWellness/SocialWellness.jsx'
 import Panels from './Initiatives/Panels/Panels.jsx'
 import CS193 from './Initiatives/CS193/CS193.jsx'
 import Contact from './Contact/Contact.jsx'
-import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom"
+import NotFound from './NotFound.jsx'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import './App.css'
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/student-wiki" element={<StudentWiki />} />
         <Route path="/student-wiki/:slug" element={<StudentWikiPost />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )

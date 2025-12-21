@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../../Components/Navbar.jsx';
+import { motion } from 'framer-motion';
 
 // Get the base path for assets
 const getBasePath = () => {
@@ -12,13 +13,28 @@ export default function CS193() {
       <Navbar />
       <section className="py-12 px-8">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-center font-montserrat font-extrabold text-4xl lg:text-5xl mb-6" style={{ color: '#333333FF' }}>
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="text-center font-montserrat font-extrabold text-4xl lg:text-5xl mb-6" 
+            style={{ color: '#333333FF' }}
+          >
             CS193
-          </h1>
+          </motion.h1>
           
           {/* Description and Image Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 mb-12">
-            <div className="w-full flex items-center justify-center order-2 md:order-1">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.05 }}
+            className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 mb-12"
+          >
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+              className="w-full flex items-center justify-center order-2 md:order-1"
+            >
               <img
                 src={encodeURI(`${getBasePath()}/initiatives/CS193/CS193IntroSlide.png`)}
                 alt="CS193"
@@ -27,15 +43,20 @@ export default function CS193() {
                   console.error('Failed to load CS193 image');
                 }}
               />
-            </div>
+            </motion.div>
             <div className="w-full flex flex-col justify-center order-1 md:order-2">
               <p className="font-raleway text-lg leading-relaxed" style={{ color: '#333333FF' }}>
                 CS193 is a 1-credit introductory CS course designed to introduce first-year students to essential tools in computer science. Organized and taught by USB members, the course covers foundational software engineering tools (such as Linux, GitHub, and the shell) to support students at the start of their CS, DS, or AI journey at Purdue University.              </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Lecture Schedule Section */}
-          <div className="mb-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            className="mb-12"
+          >
             <h2 className="font-montserrat text-3xl font-bold mb-6 text-center" style={{ color: '#333333FF' }}>
               Lecture Schedule
             </h2>
@@ -128,10 +149,15 @@ export default function CS193() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </motion.div>
 
           {/* Homework Schedule Section */}
-          <div className="mb-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.15 }}
+            className="mb-12"
+          >
             <h2 className="font-montserrat text-3xl font-bold mb-6 text-center" style={{ color: '#333333FF' }}>
               Homework Schedule
             </h2>
@@ -183,26 +209,35 @@ export default function CS193() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </motion.div>
 
           {/* Apply to be a TA Section */}
-          <div className="mb-12 text-center py-8 px-8 rounded-2xl" style={{ backgroundColor: '#FFCA44FF' }}>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+            className="mb-12 text-center py-8 px-8 rounded-2xl" 
+            style={{ backgroundColor: '#FFCA44FF' }}
+          >
             <h2 className="font-montserrat text-3xl font-bold mb-4" style={{ color: '#333333FF' }}>
               Interested in becoming a CS193 TA?
             </h2>
             <p className="font-raleway text-base mb-6 max-w-2xl mx-auto" style={{ color: '#333333FF' }}>
               Join our team and help teach essential software engineering tools to first-year students. Apply through Boiler Hire to become a CS193 Teaching Assistant.
             </p>
-            <a
+            <motion.a
+              whileHover={{ scale: 1.05, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.2), 0 4px 6px -2px rgba(0,0,0,0.1)' }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
               href="https://courses.cs.purdue.edu/boilerhire/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-8 py-3 rounded-lg font-raleway font-semibold text-lg transition-all duration-200 hover:shadow-md transform hover:scale-105"
-              style={{ backgroundColor: '#333333FF', color: '#FFFFFF' }}
+              className="inline-block px-8 py-3 rounded-lg font-raleway font-semibold text-lg"
+              style={{ backgroundColor: '#333333FF', color: '#FFFFFF', willChange: 'transform, box-shadow' }}
             >
               Apply on Boiler Hire
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
         </div>
       </section>
     </div>

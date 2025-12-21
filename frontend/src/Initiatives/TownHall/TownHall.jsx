@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../../Components/Navbar.jsx';
+import { motion } from 'framer-motion';
 
 // Get the base path for assets
 const getBasePath = () => {
@@ -12,16 +13,33 @@ export default function TownHall() {
       <Navbar />
       <section className="py-12 px-8">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-center font-montserrat font-extrabold text-4xl lg:text-5xl mb-6" style={{ color: '#333333FF' }}>
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="text-center font-montserrat font-extrabold text-4xl lg:text-5xl mb-6" 
+            style={{ color: '#333333FF' }}
+          >
             Student Forum / Town Hall
-          </h1>
+          </motion.h1>
           
-          <p className="font-raleway text-lg mb-10 text-center max-w-4xl mx-auto leading-relaxed" style={{ color: '#333333FF' }}>
+          <motion.p 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.05 }}
+            className="font-raleway text-lg mb-10 text-center max-w-4xl mx-auto leading-relaxed" 
+            style={{ color: '#333333FF' }}
+          >
             The CS Undergraduate Student Forum is an opportunity for students to present feedback and concerns about classes, professors, curricula, career resources, TAs, etc. in a student-led environment. Each Student Forum is followed by either an Undergraduate Town Hall or a meeting with the department leadership where the concerns from the forum will be compiled, anonymized, and presented. This forum is one of the best ways to get any pressing issues resolved quickly and formally.
-          </p>
+          </motion.p>
 
           {/* Fall Semester Timeline */}
-          <div className="mb-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            className="mb-12"
+          >
             <h2 className="font-montserrat text-3xl font-bold mb-6 text-center" style={{ color: '#333333FF' }}>
               Fall Semester Timeline
             </h2>
@@ -59,10 +77,15 @@ export default function TownHall() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </motion.div>
 
           {/* Spring Semester Timeline */}
-          <div className="mb-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.15 }}
+            className="mb-12"
+          >
             <h2 className="font-montserrat text-3xl font-bold mb-6 text-center" style={{ color: '#333333FF' }}>
               Spring Semester Timeline
             </h2>
@@ -100,7 +123,7 @@ export default function TownHall() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import Navbar from '../Components/Navbar.jsx';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { motion } from 'framer-motion';
 
 // Get the base path for assets
 const getBasePath = () => {
@@ -53,11 +54,34 @@ export default function StudentWikiPost() {
       <Navbar />
       <section className="py-12 px-8">
         <div className="max-w-3xl mx-auto">
-          <Link to="/student-wiki" className="inline-block mb-6 font-raleway text-sm rounded-md px-4 py-2 transition-all duration-200 hover:shadow-md" style={{ backgroundColor: '#FFCA44FF', color: '#000000' }}>
-            ← Back to Student Wiki
-          </Link>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.05, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.2), 0 4px 6px -2px rgba(0,0,0,0.1)' }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
+              style={{ willChange: 'transform, box-shadow' }}
+            >
+              <Link
+                to="/student-wiki"
+                className="inline-block mb-6 font-raleway text-sm rounded-md px-4 py-2"
+                style={{ backgroundColor: '#FFCA44FF', color: '#000000', textDecoration: 'none' }}
+              >
+                ← Back to Student Wiki
+              </Link>
+            </motion.div>
+          </motion.div>
           {meta && (
-            <div className="mb-6 bg-white rounded-xl p-6 shadow" style={{ border: '1px solid #eee' }}>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.05 }}
+              className="mb-6 bg-white rounded-xl p-6 shadow" 
+              style={{ border: '1px solid #eee' }}
+            >
               <h1 className="font-montserrat font-bold text-4xl mb-2" style={{ color: '#333333FF' }}>{meta.title}</h1>
               {meta.subtitle && <p className="font-raleway italic" style={{ color: '#333333FF' }}>{meta.subtitle}</p>}
                 <div className="flex items-center justify-between mt-4">
@@ -81,12 +105,25 @@ export default function StudentWikiPost() {
                 {meta.date && <span className="font-raleway text-sm" style={{ color: '#333333FF' }}>{meta.date}</span>}
               </div>
               <hr className="mt-6" />
-            </div>
+            </motion.div>
           )}
           {error ? (
-            <p className="font-raleway" style={{ color: '#333333FF' }}>{error}</p>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              className="font-raleway" 
+              style={{ color: '#333333FF' }}
+            >
+              {error}
+            </motion.p>
           ) : (
-            <article className="markdown-content">
+            <motion.article 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="markdown-content"
+            >
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
@@ -116,11 +153,16 @@ export default function StudentWikiPost() {
               >
                 {content}
               </ReactMarkdown>
-            </article>
+            </motion.article>
           )}
 
           {meta?.category && (
-            <div className="mt-8 flex gap-3 flex-wrap">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
+              className="mt-8 flex gap-3 flex-wrap"
+            >
               {String(meta.category)
                 .split(',')
                 .map((c) => c.trim())
@@ -136,7 +178,7 @@ export default function StudentWikiPost() {
                     </Link>
                   </span>
                 ))}
-            </div>
+            </motion.div>
           )}
         </div>
       </section>

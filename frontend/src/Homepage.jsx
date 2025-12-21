@@ -254,45 +254,94 @@ export default function Homepage() {
         <section className="py-16 px-8" style={{ backgroundColor: '#333333FF' }}>
           <div className="w-full">
             <div className="flex flex-col lg:flex-row items-center gap-16">
-              <div className="flex-shrink-0 lg:w-1/2">
-                <img
-                    src={`${getBasePath()}/USB Group photo/usb_group_2024.webp`}
-                    alt="USB Group Photo 2024"
-                    className="w-full max-w-3xl rounded-lg shadow-2xl"
+              <motion.div 
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.35, delay: 0.1 }}
+                className="flex-shrink-0 lg:w-1/2"
+              >
+                <motion.img
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.15 }}
+                  src={`${getBasePath()}/USB Group photo/usb_group_2024.webp`}
+                  alt="USB Group Photo 2024"
+                  className="w-full max-w-3xl rounded-lg shadow-2xl"
                 />
-              </div>
+              </motion.div>
 
-              <div className="flex-1 lg:w-1/2 text-center lg:text-left">
-                <h1 className="text-5xl lg:text-6xl xl:text-7xl font-raleway font-bold mb-6 leading-tight" style={{ color: '#FFFFFFFF' }}>
+              <motion.div 
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.35, delay: 0.1 }}
+                className="flex-1 lg:w-1/2 text-center lg:text-left"
+              >
+                <motion.h1 
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.15 }}
+                  className="text-5xl lg:text-6xl xl:text-7xl font-raleway font-bold mb-6 leading-tight" 
+                  style={{ color: '#FFFFFFFF' }}
+                >
                   Hello from USB!
-                </h1>
-                <p className="text-xl lg:text-2xl font-raleway leading-relaxed mb-8" style={{ color: '#FFFFFFFF' }}>
+                </motion.h1>
+                <motion.p 
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.2 }}
+                  className="text-xl lg:text-2xl font-raleway leading-relaxed mb-8" 
+                  style={{ color: '#FFFFFFFF' }}
+                >
                   The Computer Science Undergraduate Board is dedicated to improving the student experience within Computer and Data Sciences at Purdue- whether by managing CS193, hosting forums for student advocacy, or maintaining a database of undergrad-tailored resources, USB is continually creating initiatives that will uphold our values.
-                </p>
+                </motion.p>
 
-                <div className="flex flex-wrap items-center gap-6">
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.25 }}
+                  className="flex flex-wrap items-center gap-6"
+                >
                   <div className="flex gap-4">
-                    <a href="https://www.instagram.com/purdueusb" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity duration-200">
+                    <motion.a 
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.2 }}
+                      href="https://www.instagram.com/purdueusb" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
                       <img
                           src={`${getBasePath()}/Logos & Icons/social media logos/instagram.svg`}
                           alt="Instagram"
                           className="w-12 h-12"
                       />
-                    </a>
-                    <a href="https://github.com/Purdue-CSUSB" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity duration-200">
+                    </motion.a>
+                    <motion.a 
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.2 }}
+                      href="https://github.com/Purdue-CSUSB" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
                       <img
                           src={`${getBasePath()}/Logos & Icons/social media logos/github.svg`}
                           alt="GitHub"
                           className="w-12 h-12"
                       />
-                    </a>
+                    </motion.a>
                   </div>
 
                   <div className="flex flex-wrap gap-4">
                     <motion.div
-                        whileHover={{ scale: 1.05, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.2), 0 4px 6px -2px rgba(0,0,0,0.1)' }}
-                        transition={{ duration: 0.18, ease: 'easeOut' }}
-                        style={{ willChange: 'transform, box-shadow' }}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ 
+                          opacity: { duration: 0.3, delay: 0.2 },
+                          scale: { duration: 0.3, delay: 0.2 }
+                        }}
+                        whileHover={{ 
+                          scale: 1.05,
+                          transition: { duration: 0.2 }
+                        }}
+                        style={{ willChange: 'transform' }}
                     >
                       <Link
                           to="/student-wiki"
@@ -304,9 +353,17 @@ export default function Homepage() {
                       </Link>
                     </motion.div>
                     <motion.div
-                        whileHover={{ scale: 1.05, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.2), 0 4px 6px -2px rgba(0,0,0,0.1)' }}
-                        transition={{ duration: 0.18, ease: 'easeOut' }}
-                        style={{ willChange: 'transform, box-shadow' }}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ 
+                          opacity: { duration: 0.3, delay: 0.25 },
+                          scale: { duration: 0.3, delay: 0.25 }
+                        }}
+                        whileHover={{ 
+                          scale: 1.05,
+                          transition: { duration: 0.2 }
+                        }}
+                        style={{ willChange: 'transform' }}
                     >
                       <Link
                           to="/initiatives"
@@ -318,8 +375,8 @@ export default function Homepage() {
                       </Link>
                     </motion.div>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -333,29 +390,49 @@ export default function Homepage() {
           ></div>
 
           <div className="relative z-10 max-w-7xl mx-auto">
-            <div className="text-center mb-8">
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="text-center mb-8"
+            >
               <h2 className="text-5xl lg:text-6xl font-montserrat font-bold" style={{ color: '#333333FF' }}>
                 About Us
               </h2>
-            </div>
+            </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="flex flex-col max-w-md">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.05 }}
+                className="flex flex-col max-w-md"
+              >
                 <h3 className="text-3xl lg:text-4xl font-montserrat font-bold mb-4" style={{ color: '#333333FF' }}>
                   Our Mission
                 </h3>
                 <p className="text-lg lg:text-xl font-raleway leading-relaxed" style={{ color: '#333333FF' }}>
                   The Computer Science Undergraduate Student Board was established in 1999 to promote a supportive and engaged community within Purdue's Computer Science Department, and to use its relationship with faculty, the Computer Science Corporate Partners Program, and administration to advocate for the student body.
                 </p>
-              </div>
+              </motion.div>
 
-              <div className="flex flex-col w-full">
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.05 }}
+                className="flex flex-col w-full"
+              >
                 <h3 className="text-3xl lg:text-4xl font-montserrat font-bold mb-6 text-center" style={{ color: '#333333FF' }}>
                   Our Objectives
                 </h3>
 
                 <div className="flex flex-col lg:flex-row gap-10 w-full">
-                  <div className="flex-1 text-center">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
+                    className="flex-1 text-center"
+                  >
                     <div className="w-20 h-20 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
                       <img
                           src={`${getBasePath()}/Logos & Icons/about us logos/hands.svg`}
@@ -369,9 +446,14 @@ export default function Homepage() {
                     <p className="text-base font-raleway leading-relaxed" style={{ color: '#333333FF' }}>
                       USB cares about improving the student experience. Visit our daily office hours or attend the undergraduate town hall to discuss ways to improve our community.
                     </p>
-                  </div>
+                  </motion.div>
 
-                  <div className="flex-1 text-center">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.15 }}
+                    className="flex-1 text-center"
+                  >
                     <div className="w-20 h-20 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
                       <img
                           src={`${getBasePath()}/Logos & Icons/about us logos/care.svg`}
@@ -385,9 +467,14 @@ export default function Homepage() {
                     <p className="text-base font-raleway leading-relaxed" style={{ color: '#333333FF' }}>
                       We put on events that matter, from fun events like Pizza with Professors and Freshman Social Hour, to professional opportunities through career oriented panels and events.
                     </p>
-                  </div>
+                  </motion.div>
 
-                  <div className="flex-1 text-center">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.2 }}
+                    className="flex-1 text-center"
+                  >
                     <div className="w-20 h-20 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
                       <img
                           src={`${getBasePath()}/Logos & Icons/about us logos/chart.svg`}
@@ -401,29 +488,37 @@ export default function Homepage() {
                     <p className="text-base font-raleway leading-relaxed" style={{ color: '#333333FF' }}>
                       We're here to help CS, DS, and AI students. We teach CS193 Tools for first-years, run a free help room for intro CS courses, as well as maintain a tutor list, blog, and student wiki.
                     </p>
-                  </div>
+                  </motion.div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
 
         <section className="py-16 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#333333FF' }}>
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="text-center mb-12"
+            >
               <h2 className="text-4xl lg:text-5xl font-montserrat font-bold mb-4" style={{ color: '#FFFFFFFF' }}>
                 Stay Connected
               </h2>
               <p className="text-lg font-raleway" style={{ color: '#FFFFFFFF' }}>
                 Follow our latest updates and events on Instagram
               </p>
-            </div>
+            </motion.div>
 
             <div className="relative max-w-7xl mx-auto">
               <div className="flex items-center justify-center">
-                <button
+                <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
                     onClick={scrollPrev}
-                    className="absolute left-2 z-20 rounded-full bg-white transition-all duration-300 ease-in-out flex items-center justify-center shadow-xl"
+                    className="absolute left-2 z-20 rounded-full bg-white flex items-center justify-center shadow-xl"
                     style={{
                       top: '50%',
                       transform: 'translateY(-50%)',
@@ -434,11 +529,12 @@ export default function Homepage() {
                       borderRadius: '50%',
                       outline: 'none',
                       border: 'none',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      willChange: 'transform'
                     }}
                 >
                   <ChevronLeft size={32} className="text-gray-800" style={{ pointerEvents: 'none' }} />
-                </button>
+                </motion.button>
 
                 <div className="relative w-full px-20" style={{ minHeight: '400px' }}>
                   <div className="embla">
@@ -537,9 +633,12 @@ export default function Homepage() {
                   </div>
                 </div>
 
-                <button
+                <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
                     onClick={scrollNext}
-                    className="absolute right-2 z-20 rounded-full bg-white transition-all duration-300 ease-in-out flex items-center justify-center shadow-xl"
+                    className="absolute right-2 z-20 rounded-full bg-white flex items-center justify-center shadow-xl"
                     style={{
                       top: '50%',
                       transform: 'translateY(-50%)',
@@ -550,11 +649,12 @@ export default function Homepage() {
                       borderRadius: '50%',
                       outline: 'none',
                       border: 'none',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      willChange: 'transform'
                     }}
                 >
                   <ChevronRight size={32} className="text-gray-800" style={{ pointerEvents: 'none' }} />
-                </button>
+                </motion.button>
               </div>
             </div>
           </div>
@@ -562,19 +662,42 @@ export default function Homepage() {
 
         <section className="py-16 px-8 bg-white">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl lg:text-5xl font-montserrat font-bold text-center" style={{ color: '#333333FF' }}>
+            <motion.h2 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="text-4xl lg:text-5xl font-montserrat font-bold text-center" 
+              style={{ color: '#333333FF' }}
+            >
               Meet the Board
-            </h2>
-            <p className="text-center mt-3 mb-10 font-raleway" style={{ color: '#333333FF' }}>
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.05 }}
+              className="text-center mt-3 mb-10 font-raleway" 
+              style={{ color: '#333333FF' }}
+            >
               2025 – 2026 Members
-            </p>
+            </motion.p>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
               {boardMembers.map((m, idx) => {
                 const photoSrc = encodeURI(`${getBasePath()}/Board Member Photos/${m.photo}`);
                 const card = (
-                    <div key={`${m.name}-${idx}`} className="group flex flex-col items-center text-center">
-                      <div className="relative w-44 h-44 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden shadow-lg transition-transform duration-100 ease-out group-hover:scale-105" style={{ willChange: 'transform' }}>
+                    <motion.div 
+                      key={`${m.name}-${idx}`}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, delay: 0.1 + (idx * 0.03) }}
+                      className="group flex flex-col items-center text-center"
+                    >
+                      <motion.div 
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.2 }}
+                        className="relative w-44 h-44 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden shadow-lg" 
+                        style={{ willChange: 'transform' }}
+                      >
                         <img src={photoSrc} alt={m.name} className="w-full h-full object-cover will-change-auto" loading="eager" decoding="async" fetchpriority="high" width="512" height="512" onError={(e) => { e.currentTarget.src = encodeURI(`${getBasePath()}/Board Member Photos/png/None.png`); }} />
                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-75 ease-out bg-black/30 px-4 text-center" style={{ willChange: 'opacity' }}>
                           <div className="space-y-1">
@@ -583,18 +706,32 @@ export default function Homepage() {
                             {m.class && <p className="font-raleway text-white text-sm leading-snug">{m.class}</p>}
                           </div>
                         </div>
-                      </div>
-                    </div>
+                      </motion.div>
+                    </motion.div>
                 );
                 return m.site ? (
-                    <a key={`${m.name}-${idx}`} href={m.site} target="_blank" rel="noopener noreferrer" className="focus:outline-none">
+                    <motion.a 
+                      key={`${m.name}-${idx}`}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, delay: 0.1 + (idx * 0.03) }}
+                      href={m.site} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="focus:outline-none"
+                    >
                       {card}
-                    </a>
+                    </motion.a>
                 ) : card;
               })}
             </div>
 
-            <div className="mt-14">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
+              className="mt-14"
+            >
               <h3 className="text-2xl lg:text-3xl font-montserrat font-bold text-center mb-2" style={{ color: '#333333FF' }}>
                 Former Members
               </h3>
@@ -603,10 +740,13 @@ export default function Homepage() {
               </p>
 
               <div className="text-center mb-8">
-                <button
+                <motion.button
+                    whileHover={{ scale: 1.05, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.2), 0 4px 6px -2px rgba(0,0,0,0.1)' }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.18, ease: 'easeOut' }}
                     onClick={() => setShowAlumni((s) => !s)}
-                    className="inline-flex items-center gap-2 px-6 py-2 rounded-full font-raleway font-semibold transition-all duration-200"
-                    style={{ backgroundColor: '#FFCA44FF', color: '#000000' }}
+                    className="inline-flex items-center gap-2 px-6 py-2 rounded-full font-raleway font-semibold"
+                    style={{ backgroundColor: '#FFCA44FF', color: '#000000', willChange: 'transform, box-shadow' }}
                 >
                   {showAlumni ? (
                       <>
@@ -619,16 +759,32 @@ export default function Homepage() {
                         <ChevronDown size={18} />
                       </>
                   )}
-                </button>
+                </motion.button>
               </div>
 
               {showAlumni && (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8"
+                  >
                     {alumniMembers.map((m, idx) => {
                       const photoSrc = encodeURI(`${getBasePath()}/Board Member Photos/${m.photo}`);
                       const card = (
-                          <div key={`${m.name}-${idx}`} className="group flex flex-col items-center text-center">
-                            <div className="relative w-44 h-44 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden shadow-md transition-transform duration-100 ease-out group-hover:scale-105" style={{ willChange: 'transform' }}>
+                          <motion.div 
+                            key={`${m.name}-${idx}`}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.3, delay: idx * 0.02 }}
+                            className="group flex flex-col items-center text-center"
+                          >
+                            <motion.div 
+                              whileHover={{ scale: 1.05 }}
+                              transition={{ duration: 0.15 }}
+                              className="relative w-44 h-44 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden shadow-md" 
+                              style={{ willChange: 'transform' }}
+                            >
                               <img src={photoSrc} alt={m.name} className="w-full h-full object-cover will-change-auto" loading="eager" decoding="async" width="512" height="512" onError={(e) => { e.currentTarget.src = encodeURI(`${getBasePath()}/Board Member Photos/png/None.png`); }} />
                               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-75 ease-out bg-black/30 px-4 text-center" style={{ willChange: 'opacity' }}>
                                 <div className="space-y-1">
@@ -637,18 +793,27 @@ export default function Homepage() {
                                   {m.class && <p className="font-raleway text-white text-sm leading-snug">{m.class}</p>}
                                 </div>
                               </div>
-                            </div>
-                          </div>
+                            </motion.div>
+                          </motion.div>
                       );
                       return m.site ? (
-                          <a key={`${m.name}-${idx}`} href={m.site} target="_blank" rel="noopener noreferrer" className="focus:outline-none">
+                          <motion.a 
+                            key={`${m.name}-${idx}`}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.3, delay: idx * 0.02 }}
+                            href={m.site} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="focus:outline-none"
+                          >
                             {card}
-                          </a>
+                          </motion.a>
                       ) : card;
                     })}
-                  </div>
+                  </motion.div>
               )}
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -661,9 +826,15 @@ export default function Homepage() {
           ></div>
 
           <div className="relative z-10 max-w-7xl mx-auto">
-            <h2 className="text-4xl lg:text-5xl font-montserrat font-bold mb-10 text-center" style={{ color: '#333333FF' }}>
+            <motion.h2 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="text-4xl lg:text-5xl font-montserrat font-bold mb-10 text-center" 
+              style={{ color: '#333333FF' }}
+            >
               Our Initiatives
-            </h2>
+            </motion.h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {initiatives.map((item, idx) => {
@@ -679,17 +850,25 @@ export default function Homepage() {
                 return (
                     <motion.div
                         key={`${item.title}-${idx}`}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ 
+                          opacity: { duration: 0.3, delay: 0.05 + (idx * 0.05) },
+                          y: { duration: 0.3, delay: 0.05 + (idx * 0.05) },
+                          scale: { duration: 0.18, ease: 'easeOut' }
+                        }}
                         className="group flex items-center gap-4 rounded-xl shadow-md p-4 hover:shadow-xl w-full cursor-pointer"
                         style={{ backgroundColor: '#333333FF' }}
                         whileHover={{ scale: 1.03 }}
-                        transition={{ type: 'tween', duration: 0.22, ease: 'easeOut' }}
                         onClick={() => {
                           if (!link) return;
 
                           if (isExternal) {
                             window.open(link, '_blank', 'noopener,noreferrer');
                           } else {
+                            // Navigate and immediately scroll to top to prevent starting mid-page
                             navigate(link);
+                            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
                           }
                         }}
                     >
@@ -703,7 +882,10 @@ export default function Homepage() {
 
                       <div className="flex-1">
                         <p className="font-montserrat font-bold text-xl mb-1 text-white">
-                          {item.title}
+                          <span className="relative inline-block">
+                            {item.title}
+                            <span className="absolute left-0 -bottom-1 block w-full h-0.5 bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
+                          </span>
                         </p>
                         <p className="font-raleway text-sm text-white">
                           {item.description}

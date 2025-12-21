@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../Components/Navbar.jsx';
+import { motion } from 'framer-motion';
 
 // Get the base path for assets
 const getBasePath = () => {
@@ -59,21 +60,47 @@ export default function BlogList() {
         <Navbar />
         <section className="py-12 px-8">
           <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl lg:text-5xl font-montserrat font-bold mb-8 text-center" style={{ color: '#333333FF' }}>
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="text-4xl lg:text-5xl font-montserrat font-bold mb-8 text-center" 
+            style={{ color: '#333333FF' }}
+          >
             Blog Posts
-          </h1>
+          </motion.h1>
 
           {loading ? (
-            <p className="text-center font-raleway" style={{ color: '#333333FF' }}>Loading posts…</p>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              className="text-center font-raleway" 
+              style={{ color: '#333333FF' }}
+            >
+              Loading posts…
+            </motion.p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {posts.map((p) => (
-                <Link
+              {posts.map((p, idx) => (
+                <motion.div
                   key={p.slug || p.title}
-                  to={`/initiatives/blog/${slugify(p.slug || p.title)}`}
-                  className="block bg-white rounded-2xl shadow-md p-6 border transition-all duration-200 transform hover:scale-[1.04] hover:shadow-2xl"
-                  style={{ willChange: 'transform, box-shadow', borderColor: '#9CA3AF' }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    opacity: { duration: 0.3, delay: 0.05 + (idx * 0.03) },
+                    y: { duration: 0.3, delay: 0.05 + (idx * 0.03) },
+                    scale: { duration: 0.18, ease: 'easeOut' },
+                    boxShadow: { duration: 0.18, ease: 'easeOut' }
+                  }}
+                  whileHover={{ scale: 1.04, boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)' }}
+                  style={{ willChange: 'transform, box-shadow' }}
                 >
+                  <Link
+                    to={`/initiatives/blog/${slugify(p.slug || p.title)}`}
+                    className="block bg-white rounded-2xl shadow-md p-6 border"
+                    style={{ borderColor: '#9CA3AF', textDecoration: 'none' }}
+                  >
                   <h2 className="font-montserrat font-bold text-2xl mb-2" style={{ color: '#333333FF' }}>{p.title}</h2>
                   {p.subtitle && <p className="font-raleway text-sm mb-4" style={{ color: '#333333FF' }}>{p.subtitle}</p>}
                     <div className="flex items-center justify-between mt-2">
@@ -108,7 +135,8 @@ export default function BlogList() {
                         ))}
                     </div>
                   )}
-                </Link>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           )}

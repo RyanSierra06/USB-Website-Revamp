@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../../Components/Navbar.jsx';
+import { motion } from 'framer-motion';
 
 // Get the base path for assets
 const getBasePath = () => {
@@ -13,15 +14,21 @@ export default function Panels() {
         <section className="py-12 px-8">
           <div className="max-w-6xl mx-auto">
             {/* Page Title */}
-            <h1
+            <motion.h1
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
                 className="text-center font-montserrat font-extrabold text-4xl lg:text-5xl mb-6"
                 style={{ color: '#333333FF' }}
             >
               Panels
-            </h1>
+            </motion.h1>
 
             {/* Intro Paragraph */}
-            <p
+            <motion.p
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.05 }}
                 className="font-raleway text-lg mb-10 text-center max-w-4xl mx-auto leading-relaxed"
                 style={{ color: '#333333FF' }}
             >
@@ -29,10 +36,15 @@ export default function Panels() {
               the year to offer guidance to students on various topics. Our panels provide valuable insights
               and practical advice to help students navigate their academic and professional journeys in
               computer science, data science, and artificial intelligence.
-            </p>
+            </motion.p>
 
             {/* Panel Topics Section */}
-            <div className="mb-12">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="mb-12"
+            >
               <h2
                   className="font-montserrat text-3xl font-bold mb-6 text-center"
                   style={{ color: '#333333FF' }}
@@ -40,7 +52,12 @@ export default function Panels() {
                 Panel Topics
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-gray-50 rounded-xl p-6">
+                <motion.div 
+                  whileHover={{ scale: 1.02, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)' }}
+                  transition={{ duration: 0.18, ease: 'easeOut' }}
+                  className="bg-gray-50 rounded-xl p-6"
+                  style={{ willChange: 'transform, box-shadow' }}
+                >
                   <h3
                       className="font-montserrat text-xl font-bold mb-3"
                       style={{ color: '#333333FF' }}
@@ -51,8 +68,13 @@ export default function Panels() {
                     Learn about the different computer science tracks available at Purdue, including their
                     requirements, career paths, and how to choose the right track for your interests and goals.
                   </p>
-                </div>
-                <div className="bg-gray-50 rounded-xl p-6">
+                </motion.div>
+                <motion.div 
+                  whileHover={{ scale: 1.02, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)' }}
+                  transition={{ duration: 0.18, ease: 'easeOut' }}
+                  className="bg-gray-50 rounded-xl p-6"
+                  style={{ willChange: 'transform, box-shadow' }}
+                >
                   <h3
                       className="font-montserrat text-xl font-bold mb-3"
                       style={{ color: '#333333FF' }}
@@ -63,12 +85,17 @@ export default function Panels() {
                     Hear from Purdue CS/DS/AI alumni about their experiences, career journeys, and advice for
                     current students navigating their academic and professional paths.
                   </p>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Past Panel Events Section */}
-            <div className="mb-12">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
+              className="mb-12"
+            >
               <h2
                   className="font-montserrat text-3xl font-bold mb-6 text-center"
                   style={{ color: '#333333FF' }}
@@ -78,7 +105,12 @@ export default function Panels() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
                 {/* Tracks and Degree Panel */}
-                <div className="rounded-xl p-6 text-center" style={{ backgroundColor: '#FFCA44FF' }}>
+                <motion.div 
+                  whileHover={{ scale: 1.05, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.2), 0 4px 6px -2px rgba(0,0,0,0.1)' }}
+                  transition={{ duration: 0.18, ease: 'easeOut' }}
+                  className="rounded-xl p-6 text-center" 
+                  style={{ backgroundColor: '#FFCA44FF', willChange: 'transform, box-shadow' }}
+                >
                   <div
                       className="rounded-xl w-full mb-4 shadow-lg bg-gray-200 flex items-center justify-center overflow-hidden"
                       style={{ height: '300px' }}
@@ -100,10 +132,15 @@ export default function Panels() {
                   <p className="font-raleway text-sm" style={{ color: '#333333FF' }}>
                     Week of October 20th
                   </p>
-                </div>
+                </motion.div>
 
                 {/* Upperclassmen Panel */}
-                <div className="rounded-xl p-6 text-center" style={{ backgroundColor: '#FFCA44FF' }}>
+                <motion.div 
+                  whileHover={{ scale: 1.05, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.2), 0 4px 6px -2px rgba(0,0,0,0.1)' }}
+                  transition={{ duration: 0.18, ease: 'easeOut' }}
+                  className="rounded-xl p-6 text-center" 
+                  style={{ backgroundColor: '#FFCA44FF', willChange: 'transform, box-shadow' }}
+                >
                   <div
                       className="rounded-xl w-full mb-4 shadow-lg bg-gray-200 flex items-center justify-center overflow-hidden"
                       style={{ height: '300px' }}
@@ -125,10 +162,10 @@ export default function Panels() {
                   <p className="font-raleway text-sm" style={{ color: '#333333FF' }}>
                     Mid November
                   </p>
-                </div>
+                </motion.div>
 
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
       </div>

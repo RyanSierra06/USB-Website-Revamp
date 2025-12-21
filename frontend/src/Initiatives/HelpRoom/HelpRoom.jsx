@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../../Components/Navbar.jsx';
+import { motion } from 'framer-motion';
 
 // Get the base path for assets
 const getBasePath = () => {
@@ -12,13 +13,29 @@ export default function HelpRoom() {
       <Navbar />
       <section className="py-12 px-8">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-center font-montserrat font-extrabold text-4xl lg:text-5xl mb-10" style={{ color: '#333333FF' }}>
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="text-center font-montserrat font-extrabold text-4xl lg:text-5xl mb-10" 
+            style={{ color: '#333333FF' }}
+          >
             Help Room
-          </h1>
+          </motion.h1>
 
           {/* General Info Section */}
-          <div className="mb-12">
-            <div className="bg-gray-50 rounded-xl p-8 mb-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.05 }}
+            className="mb-12"
+          >
+            <motion.div 
+              whileHover={{ scale: 1.02, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)' }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
+              className="bg-gray-50 rounded-xl p-8 mb-6"
+              style={{ willChange: 'transform, box-shadow' }}
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
                 <div>
                   <h3 className="font-montserrat text-xl font-bold mb-3" style={{ color: '#333333FF' }}>
@@ -48,30 +65,44 @@ export default function HelpRoom() {
                   Help Room's main focus is debugging code and providing tips on how to start assignments rather than going over lecture topics. We guide students toward the correct solution in various projects, labs, and homework. Whenever a student walks in we take a look at their code and try giving them a personal explanation on how to solve the problem.
                 </p>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Apply to be a TA Section */}
-          <div className="mb-12 text-center py-8 px-8 rounded-2xl" style={{ backgroundColor: '#FFCA44FF' }}>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            className="mb-12 text-center py-8 px-8 rounded-2xl" 
+            style={{ backgroundColor: '#FFCA44FF' }}
+          >
             <h2 className="font-montserrat text-3xl font-bold mb-4" style={{ color: '#333333FF' }}>
               Interested in becoming a Help Room TA?
             </h2>
             <p className="font-raleway text-base mb-6 max-w-2xl mx-auto" style={{ color: '#333333FF' }}>
               Join our team of tutors and help fellow students succeed in CS 180, CS 182, and CS 240. Apply through Boiler Hire to become a Help Room Teaching Assistant.
             </p>
-            <a
+            <motion.a
+              whileHover={{ scale: 1.05, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.2), 0 4px 6px -2px rgba(0,0,0,0.1)' }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
               href="https://courses.cs.purdue.edu/boilerhire/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-8 py-3 rounded-lg font-raleway font-semibold text-lg transition-all duration-200 hover:shadow-md transform hover:scale-105"
-              style={{ backgroundColor: '#333333FF', color: '#FFFFFF' }}
+              className="inline-block px-8 py-3 rounded-lg font-raleway font-semibold text-lg"
+              style={{ backgroundColor: '#333333FF', color: '#FFFFFF', willChange: 'transform, box-shadow' }}
             >
               Apply on Boiler Hire
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
 
           {/* Schedule Section */}
-          <div className="mb-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.15 }}
+            className="mb-12"
+          >
             <h2 className="font-montserrat text-3xl font-bold mb-6" style={{ color: '#333333FF' }}>
               Schedule
             </h2>
@@ -97,7 +128,7 @@ export default function HelpRoom() {
                 </a>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

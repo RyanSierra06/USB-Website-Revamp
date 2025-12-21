@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Navbar from '../Components/Navbar.jsx';
+import { motion } from 'framer-motion';
 
 export default function Contact() {
   useEffect(() => {
@@ -18,22 +19,43 @@ export default function Contact() {
       <Navbar />
       <section className="py-12 px-8">
         <div className="max-w-3xl mx-auto">
-          <h1 className="font-montserrat font-bold text-4xl mb-5" style={{ color: '#333333FF' }}>
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="font-montserrat font-bold text-4xl mb-5" 
+            style={{ color: '#333333FF' }}
+          >
             What's on your mind?
-          </h1>
-          <p className="font-raleway mb-2" style={{ color: '#333333FF' }}>
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.05 }}
+            className="font-raleway mb-2" 
+            style={{ color: '#333333FF' }}
+          >
             You can also send us an email at{' '}
             <a href="mailto:usb@purdue.edu" className="underline text-blue-700 hover:text-blue-800">usb@purdue.edu</a>
-          </p>
-          <p className="font-raleway mb-5" style={{ color: '#333333FF' }}>
+          </motion.p>
+          <motion.p 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            className="font-raleway mb-5" 
+            style={{ color: '#333333FF' }}
+          >
             <small className="uppercase font-bold">Note:</small>{' '}
             To report concerns in an official capacity, please go to the{' '}
             <a href="https://my.cs.purdue.edu/undergraduate/concern" target="_blank" rel="noopener noreferrer" className="underline text-blue-700 hover:text-blue-800">
               CS Concern Form
             </a>.
-          </p>
+          </motion.p>
 
-          <form
+          <motion.form
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.15 }}
             id="fs-frm"
             name="simple-contact-form"
             className="flex flex-col mt-3"
@@ -120,15 +142,18 @@ export default function Contact() {
             </fieldset>
 
             <div className="w-full">
-              <input
+              <motion.input
+                whileHover={{ scale: 1.03, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.2), 0 4px 6px -2px rgba(0,0,0,0.1)' }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
                 id="submitButton"
                 type="submit"
                 value="Send"
-                className="w-full px-12 py-3 text-lg rounded-md font-raleway font-semibold border hover:shadow-md transition-transform duration-150 transform hover:scale-[1.03]"
+                className="w-full px-12 py-3 text-lg rounded-md font-raleway font-semibold border"
                 style={{ backgroundColor: '#FFCA44FF', color: '#000000', borderColor: '#9CA3AF', willChange: 'transform, box-shadow' }}
               />
             </div>
-          </form>
+          </motion.form>
         </div>
       </section>
     </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../Components/Navbar.jsx';
+import { motion } from 'framer-motion';
 
 // Get the base path for assets
 const getBasePath = () => {
@@ -51,37 +52,84 @@ export default function ClubHub() {
       <Navbar />
       <section className="py-12 px-8">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-center font-montserrat font-extrabold text-4xl mb-6" style={{ color: '#333333FF' }}>Club Hub</h1>
-          <p className="font-raleway text-lg mb-8 text-center" style={{ color: '#333333FF' }}>
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="text-center font-montserrat font-extrabold text-4xl mb-6" 
+            style={{ color: '#333333FF' }}
+          >
+            Club Hub
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.05 }}
+            className="font-raleway text-lg mb-8 text-center" 
+            style={{ color: '#333333FF' }}
+          >
             The Club Hub initiative convenes leaders from various CS organizations to exchange advice and pool resources. By fostering collaboration among these groups, the Hub aims to strengthen the CS community and provide valuable opportunities for students to engage and network.
-          </p>
+          </motion.p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 mb-10">
-            <div className="w-full">
-              <div className="rounded-xl shadow w-full h-auto overflow-hidden" style={{ boxShadow: '0 0 9px 2px rgb(226 226 226)', minHeight: '260px' }}>
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="w-full"
+            >
+              <motion.div 
+                whileHover={{ scale: 1.02, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)' }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
+                className="rounded-xl shadow w-full h-auto overflow-hidden" 
+                style={{ boxShadow: '0 0 9px 2px rgb(226 226 226)', minHeight: '260px', willChange: 'transform, box-shadow' }}
+              >
                 <div className="w-full p-6 md:p-8">
                   <h2 className="font-montserrat text-2xl font-bold mb-2 text-left" style={{ color: '#333333FF' }}>CS Club Fair</h2>
                   <p className="font-raleway text-sm md:text-base leading-relaxed break-words whitespace-normal text-left" style={{ color: '#333333FF' }}>
                     The CS Club Fair, held biannually by USB, serves as a collaborative platform for CS, DS, and AI clubs at Purdue University. This joint fair aims to streamline the process for students to explore and engage with various student organizations within these fields, fostering community and facilitating connections that enhance students' academic and professional journeys. We provide valuable insights, resources, and connections to support interests and aspirations in computer science, data science, and artificial intelligence.
                   </p>
                 </div>
-              </div>
-            </div>
-            <div className="w-full flex items-center justify-center">
-              <img
+              </motion.div>
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="w-full flex items-center justify-center"
+            >
+              <motion.img
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
                 src={encodeURI(`${getBasePath()}/initiatives/Club Hub/clubhub.png`)}
                 alt="Club Hub"
                 className="rounded-xl w-full max-w-xl md:max-w-2xl"
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
               />
-            </div>
+            </motion.div>
           </div>
 
-          <h2 className="text-center font-montserrat font-extrabold text-4xl lg:text-5xl mb-6" style={{ color: '#333333FF' }}>Clubs at Purdue</h2>
+          <motion.h2 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.15 }}
+            className="text-center font-montserrat font-extrabold text-4xl lg:text-5xl mb-6" 
+            style={{ color: '#333333FF' }}
+          >
+            Clubs at Purdue
+          </motion.h2>
 
           <div className="space-y-8">
             {clubs.map((c, idx) => (
-              <div key={`${c.name}-${idx}`} className="flex flex-col md:flex-row items-center md:items-stretch rounded-2xl" style={{ boxShadow: '0 0 9px 2px rgb(226 226 226)' }}>
+              <motion.div 
+                key={`${c.name}-${idx}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.2 + (idx * 0.05) }}
+                whileHover={{ scale: 1.02, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)' }}
+                className="flex flex-col md:flex-row items-center md:items-stretch rounded-2xl" 
+                style={{ boxShadow: '0 0 9px 2px rgb(226 226 226)', willChange: 'transform, box-shadow' }}
+              >
                 <div className="md:w-1/5 w-full p-6 flex items-center justify-center">
                   <img
                     src={resolveClubLogo(c.logo)}
@@ -103,13 +151,22 @@ export default function ClubHub() {
                   </div>
                   <div className="flex flex-col gap-2">
                     {c.links.map((l, i) => (
-                      <a key={`link-${i}`} href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="font-montserrat underline" style={{ color: '#000000F2' }}>
+                      <motion.a 
+                        key={`link-${i}`}
+                        whileHover={{ scale: 1.05, x: 5 }}
+                        transition={{ duration: 0.15 }}
+                        href={l.href} 
+                        target={l.href.startsWith('http') ? '_blank' : undefined} 
+                        rel="noopener noreferrer" 
+                        className="font-montserrat underline" 
+                        style={{ color: '#000000F2', willChange: 'transform' }}
+                      >
                         <b>{l.label}</b>
-                      </a>
+                      </motion.a>
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
