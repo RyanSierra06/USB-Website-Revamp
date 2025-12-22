@@ -26,7 +26,7 @@ export default function TownHall() {
           <motion.p 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.05 }}
+            transition={{ duration: 0.25, delay: 0.03 }}
             className="font-raleway text-lg mb-10 text-center max-w-4xl mx-auto leading-relaxed" 
             style={{ color: '#333333FF' }}
           >
@@ -37,7 +37,7 @@ export default function TownHall() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
+            transition={{ duration: 0.25, delay: 0.05 }}
             className="mb-12"
           >
             <h2 className="font-montserrat text-3xl font-bold mb-6 text-center" style={{ color: '#333333FF' }}>
@@ -83,7 +83,7 @@ export default function TownHall() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.15 }}
+            transition={{ duration: 0.25, delay: 0.07 }}
             className="mb-12"
           >
             <h2 className="font-montserrat text-3xl font-bold mb-6 text-center" style={{ color: '#333333FF' }}>

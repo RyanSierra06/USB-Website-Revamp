@@ -63,7 +63,7 @@ export default function InitiativesIndex() {
             <motion.h1
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.25 }}
                 className="text-4xl lg:text-5xl font-montserrat font-bold text-center"
                 style={{ color: '#333333FF' }}
             >
@@ -72,7 +72,7 @@ export default function InitiativesIndex() {
             <motion.p
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.05 }}
+                transition={{ duration: 0.25, delay: 0.03 }}
                 className="text-center mt-3 mb-10 font-raleway"
                 style={{ color: '#333333FF' }}
             >
@@ -98,8 +98,8 @@ export default function InitiativesIndex() {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ 
-                            opacity: { duration: 0.3, delay: 0.1 + (idx * 0.05) },
-                            y: { duration: 0.3, delay: 0.1 + (idx * 0.05) },
+                            opacity: { duration: 0.25, delay: 0.05 + (idx * 0.03) },
+                            y: { duration: 0.25, delay: 0.05 + (idx * 0.03) },
                             scale: { duration: 0.18, ease: 'easeOut' },
                             boxShadow: { duration: 0.18, ease: 'easeOut' }
                           }}

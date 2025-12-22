@@ -88,8 +88,8 @@ export default function BlogList() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ 
-                    opacity: { duration: 0.3, delay: 0.05 + (idx * 0.03) },
-                    y: { duration: 0.3, delay: 0.05 + (idx * 0.03) },
+                    opacity: { duration: 0.25, delay: 0.03 + (idx * 0.02) },
+                    y: { duration: 0.25, delay: 0.03 + (idx * 0.02) },
                     scale: { duration: 0.18, ease: 'easeOut' },
                     boxShadow: { duration: 0.18, ease: 'easeOut' }
                   }}
@@ -100,7 +100,7 @@ export default function BlogList() {
                     to={`/initiatives/blog/${slugify(p.slug || p.title)}`}
                     className="block bg-white rounded-2xl shadow-md p-6 border transition-shadow duration-200 hover:shadow-xl"
                     style={{ borderColor: '#9CA3AF', textDecoration: 'none' }}
-                  >
+                >
                   <h2 className="font-montserrat font-bold text-2xl mb-2" style={{ color: '#333333FF' }}>{p.title}</h2>
                   {p.subtitle && <p className="font-raleway text-sm mb-4" style={{ color: '#333333FF' }}>{p.subtitle}</p>}
                     <div className="flex items-center justify-between mt-2">
@@ -135,7 +135,7 @@ export default function BlogList() {
                         ))}
                     </div>
                   )}
-                  </Link>
+                </Link>
                 </motion.div>
               ))}
             </div>

@@ -27,7 +27,7 @@ export default function CS193() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.05 }}
+            transition={{ duration: 0.25, delay: 0.03 }}
             className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 mb-12"
           >
             <motion.div 
@@ -54,7 +54,7 @@ export default function CS193() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
+            transition={{ duration: 0.25, delay: 0.05 }}
             className="mb-12"
           >
             <h2 className="font-montserrat text-3xl font-bold mb-6 text-center" style={{ color: '#333333FF' }}>
@@ -155,7 +155,7 @@ export default function CS193() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.15 }}
+            transition={{ duration: 0.25, delay: 0.07 }}
             className="mb-12"
           >
             <h2 className="font-montserrat text-3xl font-bold mb-6 text-center" style={{ color: '#333333FF' }}>
@@ -215,7 +215,7 @@ export default function CS193() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.2 }}
+            transition={{ duration: 0.25, delay: 0.09 }}
             className="mb-12 text-center py-8 px-8 rounded-2xl" 
             style={{ backgroundColor: '#FFCA44FF' }}
           >

@@ -317,7 +317,7 @@ export default function StudentWikiList() {
           <motion.p 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.05 }}
+            transition={{ duration: 0.25, delay: 0.03 }}
             className="text-center mt-3 mb-10 font-raleway" 
             style={{ color: '#333333FF' }}
           >
@@ -338,7 +338,7 @@ export default function StudentWikiList() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
+              transition={{ duration: 0.25, delay: 0.05 }}
               className="max-h-[70vh] max-w-3xl mx-auto border rounded-xl p-4 shadow-sm bg-white flex flex-col"
               style={{ borderColor: '#9CA3AF' }}
             >
@@ -372,7 +372,7 @@ export default function StudentWikiList() {
                   key={`wiki-${i}`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.15 + (i * 0.03) }}
+                  transition={{ duration: 0.25, delay: 0.08 + (i * 0.02) }}
                 >
                   <Link 
                     to={`/student-wiki/${(p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`} 
@@ -426,7 +426,7 @@ export default function StudentWikiList() {
                         ))}
                     </div>
                   )}
-                  </Link>
+                </Link>
                 </motion.div>
               ))}
               </div>

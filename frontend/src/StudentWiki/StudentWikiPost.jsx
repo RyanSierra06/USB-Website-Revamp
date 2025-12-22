@@ -71,15 +71,15 @@ export default function StudentWikiPost() {
                 className="inline-block font-raleway text-sm rounded-md px-4 py-2"
                 style={{ backgroundColor: '#FFCA44FF', color: '#000000', textDecoration: 'none' }}
               >
-                ← Back to Student Wiki
-              </Link>
+            ← Back to Student Wiki
+          </Link>
             </motion.div>
           </motion.div>
           {meta && (
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.05 }}
+              transition={{ duration: 0.25, delay: 0.03 }}
               className="mb-6 bg-white rounded-xl p-6 shadow" 
               style={{ border: '1px solid #eee' }}
             >
@@ -122,7 +122,7 @@ export default function StudentWikiPost() {
             <motion.article 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
+              transition={{ duration: 0.25, delay: 0.05 }}
               className="markdown-content"
             >
               <ReactMarkdown
@@ -161,7 +161,7 @@ export default function StudentWikiPost() {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.15 }}
+              transition={{ duration: 0.25, delay: 0.07 }}
               className="mt-8 flex gap-3 flex-wrap"
             >
               {String(meta.category)

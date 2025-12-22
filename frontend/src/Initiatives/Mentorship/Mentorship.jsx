@@ -26,7 +26,7 @@ export default function Mentorship() {
           <motion.p 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.05 }}
+            transition={{ duration: 0.25, delay: 0.03 }}
             className="font-raleway text-lg mb-10 text-center max-w-4xl mx-auto leading-relaxed" 
             style={{ color: '#333333FF' }}
           >
@@ -37,7 +37,7 @@ export default function Mentorship() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
+            transition={{ duration: 0.25, delay: 0.05 }}
             className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12"
           >
             {/* Mentees Section - Left */}
@@ -100,20 +100,20 @@ export default function Mentorship() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.15 }}
+            transition={{ duration: 0.25, delay: 0.07 }}
             className="mb-12 text-center"
           >
             <motion.img
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
-              src={encodeURI(`${getBasePath()}/initiatives/Mentorship/MentorshipEvent.png`)}
-              alt="International Career Panel"
-              className="rounded-xl w-full max-w-4xl mx-auto shadow-lg"
-              style={{ height: '400px', objectFit: 'cover' }}
-              onError={(e) => {
-                // Fallback to other images if first one fails
-                e.currentTarget.src = encodeURI(`${getBasePath()}/initiatives/Career Resources/IMG_6846.jpg`);
-              }}
+                src={encodeURI(`${getBasePath()}/initiatives/Mentorship/MentorshipEvent.png`)}
+                alt="International Career Panel"
+                className="rounded-xl w-full max-w-4xl mx-auto shadow-lg"
+                style={{ height: '400px', objectFit: 'cover' }}
+                onError={(e) => {
+                  // Fallback to other images if first one fails
+                  e.currentTarget.src = encodeURI(`${getBasePath()}/initiatives/Career Resources/IMG_6846.jpg`);
+                }}
             />
             <p className="font-raleway text-base mt-4" style={{ color: '#333333FF' }}>
               Mentorship callout 1
@@ -126,7 +126,7 @@ export default function Mentorship() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.2 }}
+            transition={{ duration: 0.25, delay: 0.09 }}
             className="mb-12"
           >
             <h2 className="font-montserrat text-3xl font-bold mb-6 text-center" style={{ color: '#333333FF' }}>

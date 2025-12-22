@@ -111,27 +111,25 @@ export default function Homepage() {
     return t.replace(/\r\n/g, '\n').trim();
   };
 
+  // Only preload the first visible Instagram post (critical above-the-fold image)
   useEffect(() => {
     if (!instagramPosts || instagramPosts.length === 0) return;
-    instagramPosts.forEach((p) => {
-      const url = getImageUrl(p);
-      if (!url) return;
-      const img = new Image();
-      img.decoding = 'async';
-      img.loading = 'eager';
-      img.src = url;
-    });
-    const len = instagramPosts.length;
-    const boundaryIdx = [0, 1, len - 1];
-    boundaryIdx.forEach((i) => {
-      if (i < 0 || i >= len) return;
-      const url = getImageUrl(instagramPosts[i]);
-      if (!url) return;
-      const img = new Image();
-      img.decoding = 'async';
-      img.loading = 'eager';
-      img.src = url;
-    });
+    // Only preload first post that's immediately visible
+    const firstPost = instagramPosts[0];
+    if (firstPost) {
+      const url = getImageUrl(firstPost);
+      if (url) {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = url;
+        link.fetchPriority = 'high';
+        document.head.appendChild(link);
+        return () => {
+          try { document.head.removeChild(link); } catch {}
+        };
+      }
+    }
   }, [instagramPosts]);
 
   const [boardMembers, setBoardMembers] = useState([]);
@@ -158,21 +156,13 @@ export default function Homepage() {
     loadBoard();
   }, []);
 
-  useEffect(() => {
-    if (!boardMembers || boardMembers.length === 0) return;
-    boardMembers.forEach((m) => {
-      const src = `${getBasePath()}/Board Member Photos/${m.photo}`;
-      const img = new Image();
-      img.decoding = 'async';
-      img.loading = 'eager';
-      img.src = src;
-    });
-  }, [boardMembers]);
-
+  // Only preload the first 3-4 visible board member photos (critical above-the-fold images)
   useEffect(() => {
     if (!boardMembers || boardMembers.length === 0) return;
     const head = document.head;
-    const links = boardMembers.map((m) => {
+    // Only preload first 3 visible board members to reduce edge requests
+    const criticalMembers = boardMembers.slice(0, 3);
+    const links = criticalMembers.map((m) => {
       const href = `${getBasePath()}/Board Member Photos/${m.photo}`;
       const l = document.createElement('link');
       l.rel = 'preload';
@@ -185,28 +175,8 @@ export default function Homepage() {
     return () => { links.forEach((l) => { try { document.head.removeChild(l); } catch {} }); };
   }, [boardMembers]);
 
-  useEffect(() => {
-    if (!alumniMembers || alumniMembers.length === 0) return;
-    alumniMembers.forEach((m) => {
-      const src = `${getBasePath()}/Board Member Photos/${m.photo}`;
-      const img = new Image();
-      img.decoding = 'async';
-      img.loading = 'eager';
-      img.src = src;
-    });
-    const head = document.head;
-    const links = alumniMembers.map((m) => {
-      const href = `${getBasePath()}/Board Member Photos/${m.photo}`;
-      const l = document.createElement('link');
-      l.rel = 'preload';
-      l.as = 'image';
-      l.href = href;
-      l.fetchPriority = 'high';
-      head.appendChild(l);
-      return l;
-    });
-    return () => { links.forEach((l) => { try { document.head.removeChild(l); } catch {} }); };
-  }, [alumniMembers]);
+  // Don't preload alumni photos - they're below the fold and only shown on toggle
+  // They will be lazy loaded when the user clicks to show alumni
 
   const [initiatives, setInitiatives] = useState([]);
   useEffect(() => {
@@ -257,28 +227,28 @@ export default function Homepage() {
               <motion.div 
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.35, delay: 0.1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
                 className="flex-shrink-0 lg:w-1/2"
               >
                 <motion.img
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.15 }}
-                  src={`${getBasePath()}/USB Group photo/usb_group_2024.webp`}
-                  alt="USB Group Photo 2024"
-                  className="w-full max-w-3xl rounded-lg shadow-2xl"
+                    src={`${getBasePath()}/USB Group photo/usb_group_2024.webp`}
+                    alt="USB Group Photo 2024"
+                    className="w-full max-w-3xl rounded-lg shadow-2xl"
                 />
               </motion.div>
 
               <motion.div 
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.35, delay: 0.1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
                 className="flex-1 lg:w-1/2 text-center lg:text-left"
               >
                 <motion.h1 
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.15 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
                   className="text-5xl lg:text-6xl xl:text-7xl font-raleway font-bold mb-6 leading-tight" 
                   style={{ color: '#FFFFFFFF' }}
                 >
@@ -287,7 +257,7 @@ export default function Homepage() {
                 <motion.p 
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
+                  transition={{ duration: 0.5, delay: 0.25 }}
                   className="text-xl lg:text-2xl font-raleway leading-relaxed mb-8" 
                   style={{ color: '#FFFFFFFF' }}
                 >
@@ -297,7 +267,7 @@ export default function Homepage() {
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.25 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
                   className="flex flex-wrap items-center gap-6"
                 >
                   <div className="flex gap-4">
@@ -334,14 +304,26 @@ export default function Homepage() {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ 
-                          opacity: { duration: 0.3, delay: 0.2 },
-                          scale: { duration: 0.3, delay: 0.2 }
+                          opacity: { duration: 0.5, delay: 0.35 },
+                          scale: { duration: 0.5, delay: 0.35 }
                         }}
-                        whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
+                        whileHover={{ 
+                          scale: 1.05,
+                          y: -4,
+                          transition: { 
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 17
+                          }
+                        }}
+                        whileTap={{ 
+                          scale: 0.98,
+                          y: -2
+                        }}
                     >
                       <Link
                           to="/student-wiki"
-                          className="flex items-center gap-2 px-6 py-3 rounded-lg font-raleway text-lg focus:outline-none"
+                          className="flex items-center gap-2 px-6 py-3 rounded-lg font-raleway text-lg focus:outline-none transition-shadow duration-200"
                           style={{ backgroundColor: '#FFCA44FF', color: '#000000' }}
                       >
                         <BookOpen size={20} />
@@ -352,14 +334,26 @@ export default function Homepage() {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ 
-                          opacity: { duration: 0.3, delay: 0.25 },
-                          scale: { duration: 0.3, delay: 0.25 }
+                          opacity: { duration: 0.5, delay: 0.4 },
+                          scale: { duration: 0.5, delay: 0.4 }
                         }}
-                        whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
+                        whileHover={{ 
+                          scale: 1.05,
+                          y: -4,
+                          transition: { 
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 17
+                          }
+                        }}
+                        whileTap={{ 
+                          scale: 0.98,
+                          y: -2
+                        }}
                     >
                       <Link
                           to="/initiatives"
-                          className="flex items-center gap-2 px-6 py-3 rounded-lg font-raleway text-lg focus:outline-none"
+                          className="flex items-center gap-2 px-6 py-3 rounded-lg font-raleway text-lg focus:outline-none transition-shadow duration-200"
                           style={{ backgroundColor: '#FFCA44FF', color: '#000000' }}
                       >
                         <Compass size={20} />
@@ -385,7 +379,7 @@ export default function Homepage() {
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
               className="text-center mb-8"
             >
               <h2 className="text-5xl lg:text-6xl font-montserrat font-bold" style={{ color: '#333333FF' }}>
@@ -397,7 +391,7 @@ export default function Homepage() {
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.05 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
                 className="flex flex-col max-w-md"
               >
                 <h3 className="text-3xl lg:text-4xl font-montserrat font-bold mb-4" style={{ color: '#333333FF' }}>
@@ -411,7 +405,7 @@ export default function Homepage() {
               <motion.div 
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.05 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
                 className="flex flex-col w-full"
               >
                 <h3 className="text-3xl lg:text-4xl font-montserrat font-bold mb-6 text-center" style={{ color: '#333333FF' }}>
@@ -422,7 +416,7 @@ export default function Homepage() {
                   <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.1 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
                     className="flex-1 text-center"
                   >
                     <div className="w-20 h-20 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
@@ -443,7 +437,7 @@ export default function Homepage() {
                   <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.15 }}
+                    transition={{ duration: 0.5, delay: 0.25 }}
                     className="flex-1 text-center"
                   >
                     <div className="w-20 h-20 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
@@ -464,7 +458,7 @@ export default function Homepage() {
                   <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.2 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
                     className="flex-1 text-center"
                   >
                     <div className="w-20 h-20 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
@@ -520,17 +514,17 @@ export default function Homepage() {
                       onClick={scrollPrev}
                       className="rounded-full bg-white flex items-center justify-center shadow-xl"
                       style={{
-                        backgroundColor: '#FFFFFF',
-                        width: '64px',
-                        height: '64px',
-                        borderRadius: '50%',
-                        outline: 'none',
-                        border: 'none',
+                      backgroundColor: '#FFFFFF',
+                      width: '64px',
+                      height: '64px',
+                      borderRadius: '50%',
+                      outline: 'none',
+                      border: 'none',
                         cursor: 'pointer',
                         willChange: 'transform'
-                      }}
-                  >
-                    <ChevronLeft size={32} className="text-gray-800" style={{ pointerEvents: 'none' }} />
+                    }}
+                >
+                  <ChevronLeft size={32} className="text-gray-800" style={{ pointerEvents: 'none' }} />
                   </motion.button>
                 </div>
 
@@ -570,9 +564,9 @@ export default function Homepage() {
                                       src={getImageUrl(post)}
                                       alt="Instagram post"
                                       className="w-full h-full object-contain opacity-0"
-                                      loading="eager"
+                                      loading={index === 0 ? "eager" : "lazy"}
                                       decoding="async"
-                                      fetchpriority="high"
+                                      fetchpriority={index === 0 ? "high" : "auto"}
                                       onLoad={(e) => { e.currentTarget.style.opacity = '1'; }}
                                       onError={(e) => { e.currentTarget.style.opacity = '1'; e.currentTarget.src = `${getBasePath()}/Logos & Icons/social media logos/instagram.svg`; }}
                                       style={{ transition: 'opacity 60ms linear' }}
@@ -622,7 +616,7 @@ export default function Homepage() {
                                   </div>
                                 </div>
                             )}
-                            </div>
+                          </div>
                           </div>
                         );
                       })}
@@ -646,17 +640,17 @@ export default function Homepage() {
                       onClick={scrollNext}
                       className="rounded-full bg-white flex items-center justify-center shadow-xl"
                       style={{
-                        backgroundColor: '#FFFFFF',
-                        width: '64px',
-                        height: '64px',
-                        borderRadius: '50%',
-                        outline: 'none',
-                        border: 'none',
+                      backgroundColor: '#FFFFFF',
+                      width: '64px',
+                      height: '64px',
+                      borderRadius: '50%',
+                      outline: 'none',
+                      border: 'none',
                         cursor: 'pointer',
                         willChange: 'transform'
-                      }}
-                  >
-                    <ChevronRight size={32} className="text-gray-800" style={{ pointerEvents: 'none' }} />
+                    }}
+                >
+                  <ChevronRight size={32} className="text-gray-800" style={{ pointerEvents: 'none' }} />
                   </motion.button>
                 </div>
               </div>
@@ -669,7 +663,7 @@ export default function Homepage() {
             <motion.h2 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
               className="text-4xl lg:text-5xl font-montserrat font-bold text-center" 
               style={{ color: '#333333FF' }}
             >
@@ -678,7 +672,7 @@ export default function Homepage() {
             <motion.p 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.05 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
               className="text-center mt-3 mb-10 font-raleway" 
               style={{ color: '#333333FF' }}
             >
@@ -693,7 +687,7 @@ export default function Homepage() {
                       key={`${m.name}-${idx}`}
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3, delay: 0.1 + (idx * 0.03) }}
+                      transition={{ duration: 0.5, delay: 0.2 + (idx * 0.05) }}
                       className="group flex flex-col items-center text-center"
                     >
                       <motion.div 
@@ -702,7 +696,7 @@ export default function Homepage() {
                         className="relative w-44 h-44 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden shadow-lg" 
                         style={{ willChange: 'transform' }}
                       >
-                        <img src={photoSrc} alt={m.name} className="w-full h-full object-cover will-change-auto" loading="eager" decoding="async" fetchpriority="high" width="512" height="512" onError={(e) => { e.currentTarget.src = encodeURI(`${getBasePath()}/Board Member Photos/png/None.png`); }} />
+                        <img src={photoSrc} alt={m.name} className="w-full h-full object-cover will-change-auto" loading={idx < 3 ? "eager" : "lazy"} decoding="async" fetchpriority={idx < 3 ? "high" : "auto"} width="512" height="512" onError={(e) => { e.currentTarget.src = encodeURI(`${getBasePath()}/Board Member Photos/png/None.png`); }} />
                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-75 ease-out bg-black/30 px-4 text-center" style={{ willChange: 'opacity' }}>
                           <div className="space-y-1">
                             <p className="font-montserrat font-bold text-white text-lg leading-snug">{m.name}</p>
@@ -718,7 +712,7 @@ export default function Homepage() {
                       key={`${m.name}-${idx}`}
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3, delay: 0.1 + (idx * 0.03) }}
+                      transition={{ duration: 0.5, delay: 0.2 + (idx * 0.05) }}
                       href={m.site} 
                       target="_blank" 
                       rel="noopener noreferrer" 
@@ -733,7 +727,7 @@ export default function Homepage() {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.15 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
               className="mt-14"
             >
               <h3 className="text-2xl lg:text-3xl font-montserrat font-bold text-center mb-2" style={{ color: '#333333FF' }}>
@@ -770,7 +764,7 @@ export default function Homepage() {
                   <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.5 }}
                     className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8"
                   >
                     {alumniMembers.map((m, idx) => {
@@ -780,7 +774,7 @@ export default function Homepage() {
                             key={`${m.name}-${idx}`}
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.3, delay: idx * 0.02 }}
+                            transition={{ duration: 0.5, delay: idx * 0.03 }}
                             className="group flex flex-col items-center text-center"
                           >
                             <motion.div 
@@ -789,7 +783,7 @@ export default function Homepage() {
                               className="relative w-44 h-44 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden shadow-md" 
                               style={{ willChange: 'transform' }}
                             >
-                              <img src={photoSrc} alt={m.name} className="w-full h-full object-cover will-change-auto" loading="eager" decoding="async" width="512" height="512" onError={(e) => { e.currentTarget.src = encodeURI(`${getBasePath()}/Board Member Photos/png/None.png`); }} />
+                              <img src={photoSrc} alt={m.name} className="w-full h-full object-cover will-change-auto" loading="lazy" decoding="async" width="512" height="512" onError={(e) => { e.currentTarget.src = encodeURI(`${getBasePath()}/Board Member Photos/png/None.png`); }} />
                               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-75 ease-out bg-black/30 px-4 text-center" style={{ willChange: 'opacity' }}>
                                 <div className="space-y-1">
                                   <p className="font-montserrat font-bold text-white text-lg leading-snug">{m.name}</p>
@@ -805,7 +799,7 @@ export default function Homepage() {
                             key={`${m.name}-${idx}`}
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.3, delay: idx * 0.02 }}
+                            transition={{ duration: 0.5, delay: idx * 0.03 }}
                             href={m.site} 
                             target="_blank" 
                             rel="noopener noreferrer" 
@@ -833,7 +827,7 @@ export default function Homepage() {
             <motion.h2 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
               className="text-4xl lg:text-5xl font-montserrat font-bold mb-10 text-center" 
               style={{ color: '#333333FF' }}
             >
@@ -857,8 +851,8 @@ export default function Homepage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ 
-                          opacity: { duration: 0.3, delay: 0.05 + (idx * 0.05) },
-                          y: { duration: 0.3, delay: 0.05 + (idx * 0.05) },
+                          opacity: { duration: 0.5, delay: 0.2 + (idx * 0.08) },
+                          y: { duration: 0.5, delay: 0.2 + (idx * 0.08) },
                           scale: { duration: 0.18, ease: 'easeOut' }
                         }}
                         className="group flex items-center gap-4 rounded-xl shadow-md p-4 hover:shadow-xl w-full cursor-pointer"
@@ -887,7 +881,7 @@ export default function Homepage() {
                       <div className="flex-1">
                         <p className="font-montserrat font-bold text-xl mb-1 text-white">
                           <span className="relative inline-block">
-                            {item.title}
+                          {item.title}
                             <span className="absolute left-0 -bottom-1 block w-full h-0.5 bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
                           </span>
                         </p>

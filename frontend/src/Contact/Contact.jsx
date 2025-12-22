@@ -31,7 +31,7 @@ export default function Contact() {
           <motion.p 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.05 }}
+            transition={{ duration: 0.25, delay: 0.03 }}
             className="font-raleway mb-2" 
             style={{ color: '#333333FF' }}
           >
@@ -41,7 +41,7 @@ export default function Contact() {
           <motion.p 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
+            transition={{ duration: 0.25, delay: 0.05 }}
             className="font-raleway mb-5" 
             style={{ color: '#333333FF' }}
           >
@@ -55,7 +55,7 @@ export default function Contact() {
           <motion.form
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.15 }}
+            transition={{ duration: 0.25, delay: 0.07 }}
             id="fs-frm"
             name="simple-contact-form"
             className="flex flex-col mt-3"

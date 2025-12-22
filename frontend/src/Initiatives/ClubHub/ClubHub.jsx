@@ -149,6 +149,8 @@ export default function ClubHub() {
                     alt={c.name}
                     className="rounded-xl"
                     style={{ width: 170, height: 'auto' }}
+                    loading="lazy"
+                    decoding="async"
                     onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                 </div>
