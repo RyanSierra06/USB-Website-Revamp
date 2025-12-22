@@ -337,11 +337,7 @@ export default function Homepage() {
                           opacity: { duration: 0.3, delay: 0.2 },
                           scale: { duration: 0.3, delay: 0.2 }
                         }}
-                        whileHover={{ 
-                          scale: 1.05,
-                          transition: { duration: 0.2 }
-                        }}
-                        style={{ willChange: 'transform' }}
+                        whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
                     >
                       <Link
                           to="/student-wiki"
@@ -359,11 +355,7 @@ export default function Homepage() {
                           opacity: { duration: 0.3, delay: 0.25 },
                           scale: { duration: 0.3, delay: 0.25 }
                         }}
-                        whileHover={{ 
-                          scale: 1.05,
-                          transition: { duration: 0.2 }
-                        }}
-                        style={{ willChange: 'transform' }}
+                        whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
                     >
                       <Link
                           to="/initiatives"
@@ -513,28 +505,34 @@ export default function Homepage() {
 
             <div className="relative max-w-7xl mx-auto">
               <div className="flex items-center justify-center">
-                <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ duration: 0.2 }}
-                    onClick={scrollPrev}
-                    className="absolute left-2 z-20 rounded-full bg-white flex items-center justify-center shadow-xl"
+                <div
+                    className="absolute left-2 z-20"
                     style={{
                       top: '50%',
                       transform: 'translateY(-50%)',
-                      transformOrigin: 'center center',
-                      backgroundColor: '#FFFFFF',
-                      width: '64px',
-                      height: '64px',
-                      borderRadius: '50%',
-                      outline: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      willChange: 'transform'
+                      transformOrigin: 'center center'
                     }}
                 >
-                  <ChevronLeft size={32} className="text-gray-800" style={{ pointerEvents: 'none' }} />
-                </motion.button>
+                  <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                      onClick={scrollPrev}
+                      className="rounded-full bg-white flex items-center justify-center shadow-xl"
+                      style={{
+                        backgroundColor: '#FFFFFF',
+                        width: '64px',
+                        height: '64px',
+                        borderRadius: '50%',
+                        outline: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        willChange: 'transform'
+                      }}
+                  >
+                    <ChevronLeft size={32} className="text-gray-800" style={{ pointerEvents: 'none' }} />
+                  </motion.button>
+                </div>
 
                 <div className="relative w-full px-20" style={{ minHeight: '400px' }}>
                   <div className="embla">
@@ -624,7 +622,7 @@ export default function Homepage() {
                                   </div>
                                 </div>
                             )}
-                          </div>
+                            </div>
                           </div>
                         );
                       })}
@@ -633,28 +631,34 @@ export default function Homepage() {
                   </div>
                 </div>
 
-                <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ duration: 0.2 }}
-                    onClick={scrollNext}
-                    className="absolute right-2 z-20 rounded-full bg-white flex items-center justify-center shadow-xl"
+                <div
+                    className="absolute right-2 z-20"
                     style={{
                       top: '50%',
                       transform: 'translateY(-50%)',
-                      transformOrigin: 'center center',
-                      backgroundColor: '#FFFFFF',
-                      width: '64px',
-                      height: '64px',
-                      borderRadius: '50%',
-                      outline: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      willChange: 'transform'
+                      transformOrigin: 'center center'
                     }}
                 >
-                  <ChevronRight size={32} className="text-gray-800" style={{ pointerEvents: 'none' }} />
-                </motion.button>
+                  <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                      onClick={scrollNext}
+                      className="rounded-full bg-white flex items-center justify-center shadow-xl"
+                      style={{
+                        backgroundColor: '#FFFFFF',
+                        width: '64px',
+                        height: '64px',
+                        borderRadius: '50%',
+                        outline: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        willChange: 'transform'
+                      }}
+                  >
+                    <ChevronRight size={32} className="text-gray-800" style={{ pointerEvents: 'none' }} />
+                  </motion.button>
+                </div>
               </div>
             </div>
           </div>

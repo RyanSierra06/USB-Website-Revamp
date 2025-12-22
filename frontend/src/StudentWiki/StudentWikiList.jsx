@@ -356,7 +356,7 @@ export default function StudentWikiList() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-6 overflow-y-auto pr-1" style={{ scrollbarGutter: 'stable' }}>
+              <div className="grid grid-cols-1 gap-6 overflow-y-auto px-4 py-2" style={{ scrollbarGutter: 'stable' }}>
               {filtered.length === 0 ? (
                 <motion.div 
                   initial={{ opacity: 0 }}

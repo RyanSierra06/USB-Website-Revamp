@@ -64,10 +64,11 @@ export default function StudentWikiPost() {
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.18, ease: 'easeOut' }}
               style={{ willChange: 'transform, box-shadow' }}
+              className="inline-block mb-6 rounded-md"
             >
               <Link
                 to="/student-wiki"
-                className="inline-block mb-6 font-raleway text-sm rounded-md px-4 py-2"
+                className="inline-block font-raleway text-sm rounded-md px-4 py-2"
                 style={{ backgroundColor: '#FFCA44FF', color: '#000000', textDecoration: 'none' }}
               >
                 ← Back to Student Wiki

@@ -55,7 +55,7 @@ export default function ClubHub() {
           <motion.h1 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
             className="text-center font-montserrat font-extrabold text-4xl mb-6" 
             style={{ color: '#333333FF' }}
           >
@@ -64,7 +64,7 @@ export default function ClubHub() {
           <motion.p 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.05 }}
+            transition={{ duration: 0.4, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
             className="font-raleway text-lg mb-8 text-center" 
             style={{ color: '#333333FF' }}
           >
@@ -73,14 +73,14 @@ export default function ClubHub() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 mb-10">
             <motion.div 
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
+              transition={{ duration: 0.5, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
               className="w-full"
             >
               <motion.div 
                 whileHover={{ scale: 1.02, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)' }}
-                transition={{ duration: 0.18, ease: 'easeOut' }}
+                transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
                 className="rounded-xl shadow w-full h-auto overflow-hidden" 
                 style={{ boxShadow: '0 0 9px 2px rgb(226 226 226)', minHeight: '260px', willChange: 'transform, box-shadow' }}
               >
@@ -93,14 +93,21 @@ export default function ClubHub() {
               </motion.div>
             </motion.div>
             <motion.div 
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
+              transition={{ duration: 0.5, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
               className="w-full flex items-center justify-center"
             >
               <motion.img
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: 0.2, 
+                  ease: [0.25, 0.1, 0.25, 1],
+                  scale: { duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }
+                }}
                 whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.2 }}
                 src={encodeURI(`${getBasePath()}/initiatives/Club Hub/clubhub.png`)}
                 alt="Club Hub"
                 className="rounded-xl w-full max-w-xl md:max-w-2xl"
@@ -112,7 +119,7 @@ export default function ClubHub() {
           <motion.h2 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.15 }}
+            transition={{ duration: 0.4, delay: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
             className="text-center font-montserrat font-extrabold text-4xl lg:text-5xl mb-6" 
             style={{ color: '#333333FF' }}
           >
@@ -123,9 +130,15 @@ export default function ClubHub() {
             {clubs.map((c, idx) => (
               <motion.div 
                 key={`${c.name}-${idx}`}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.2 + (idx * 0.05) }}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: 0.3 + (idx * 0.08), 
+                  ease: [0.25, 0.1, 0.25, 1],
+                  scale: { duration: 0.25, ease: [0.25, 0.1, 0.25, 1] },
+                  boxShadow: { duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }
+                }}
                 whileHover={{ scale: 1.02, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)' }}
                 className="flex flex-col md:flex-row items-center md:items-stretch rounded-2xl" 
                 style={{ boxShadow: '0 0 9px 2px rgb(226 226 226)', willChange: 'transform, box-shadow' }}
@@ -153,8 +166,8 @@ export default function ClubHub() {
                     {c.links.map((l, i) => (
                       <motion.a 
                         key={`link-${i}`}
-                        whileHover={{ scale: 1.05, x: 5 }}
-                        transition={{ duration: 0.15 }}
+                        whileHover={{ scale: 1.05, x: 3 }}
+                        transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
                         href={l.href} 
                         target={l.href.startsWith('http') ? '_blank' : undefined} 
                         rel="noopener noreferrer" 

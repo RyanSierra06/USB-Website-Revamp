@@ -97,20 +97,21 @@ export default function InitiativesIndex() {
                           key={`${item.title}-${idx}`}
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.3, delay: 0.1 + (idx * 0.05) }}
-                          className="group flex items-center gap-6 rounded-2xl shadow-md p-8 w-full cursor-pointer border"
+                          transition={{ 
+                            opacity: { duration: 0.3, delay: 0.1 + (idx * 0.05) },
+                            y: { duration: 0.3, delay: 0.1 + (idx * 0.05) },
+                            scale: { duration: 0.18, ease: 'easeOut' },
+                            boxShadow: { duration: 0.18, ease: 'easeOut' }
+                          }}
+                          className="group flex items-center gap-6 rounded-2xl shadow-md p-8 w-full cursor-pointer border transition-shadow duration-200 hover:shadow-xl"
                           style={{
                             backgroundColor: '#FFFFFF',
                             borderColor: '#9CA3AF',
-                            willChange: 'transform, box-shadow',
+                            willChange: 'transform',
                             minHeight: '7rem',
                           }}
                           onClick={() => handleCardClick(item)}
-                          whileHover={{
-                            scale: 1.03,
-                            boxShadow:
-                                '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
-                          }}
+                          whileHover={{ scale: 1.04 }}
                       >
                         <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-gray-200 flex items-center justify-center">
                           <img

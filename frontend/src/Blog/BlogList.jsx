@@ -81,7 +81,7 @@ export default function BlogList() {
               Loading posts…
             </motion.p>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
               {posts.map((p, idx) => (
                 <motion.div
                   key={p.slug || p.title}
@@ -93,12 +93,12 @@ export default function BlogList() {
                     scale: { duration: 0.18, ease: 'easeOut' },
                     boxShadow: { duration: 0.18, ease: 'easeOut' }
                   }}
-                  whileHover={{ scale: 1.04, boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)' }}
-                  style={{ willChange: 'transform, box-shadow' }}
+                  whileHover={{ scale: 1.04 }}
+                  style={{ willChange: 'transform' }}
                 >
                   <Link
                     to={`/initiatives/blog/${slugify(p.slug || p.title)}`}
-                    className="block bg-white rounded-2xl shadow-md p-6 border"
+                    className="block bg-white rounded-2xl shadow-md p-6 border transition-shadow duration-200 hover:shadow-xl"
                     style={{ borderColor: '#9CA3AF', textDecoration: 'none' }}
                   >
                   <h2 className="font-montserrat font-bold text-2xl mb-2" style={{ color: '#333333FF' }}>{p.title}</h2>
