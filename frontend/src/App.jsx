@@ -15,7 +15,15 @@ import CS193 from './Initiatives/CS193/CS193.jsx'
 import Contact from './Contact/Contact.jsx'
 import NotFound from './NotFound.jsx'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { useEffect } from 'react'
 import './App.css'
+
+function ApplyRedirect() {
+  useEffect(() => {
+    window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSfREQ9CAZjYXulbVHhJzClDQDReIVz1e556WbubP86_6NyR-w/viewform';
+  }, []);
+  return null;
+}
 
 function App() {
   return (
@@ -36,6 +44,7 @@ function App() {
         <Route path="/student-wiki" element={<StudentWiki />} />
         <Route path="/student-wiki/:slug" element={<StudentWikiPost />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/apply" element={<ApplyRedirect />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
